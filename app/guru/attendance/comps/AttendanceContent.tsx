@@ -110,8 +110,8 @@ export default function AttendanceContent(): ReactElement {
   const allDone = students.length > 0 && students.every((s) => s.status !== "");
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col pb-20">
-      <main className="max-w-md mt-3 bg-white w-full mx-auto">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <main className="max-w-md pb-3 bg-white w-full mx-auto">
         <AttendanceHeader total={students.length} filled={students.filter((s) => s.status !== "").length} kelasName={kelasName} />
         <AttendanceList ref={listRef} students={students} loading={loading} fetchError={fetchError} currentIndex={currentIndex} />
         <AttendanceButtons updateStatus={updateStatus} submitting={submitting} allDone={allDone} onSubmit={() => setConfirmOpen(true)} disabled={!allDone || submitting} />
