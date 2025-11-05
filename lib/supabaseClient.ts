@@ -1,10 +1,21 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase environment variables missing. Check .env.local");
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = {
+  from: () => ({
+    select: async () => ({ data: [], error: null }),
+    insert: async () => ({ data: null, error: null }),
+    update: async () => ({ data: null, error: null }),
+    delete: async () => ({ data: null, error: null }),
+    eq: () => ({
+      select: async () => ({ data: [], error: null }),
+    }),
+    order: () => ({
+      select: async () => ({ data: [], error: null }),
+    }),
+    in: () => ({
+      select: async () => ({ data: [], error: null }),
+    }),
+  }),
+  auth: {
+    getSession: async () => ({ data: { session: null }, error: null }),
+    signOut: async () => ({ error: null }),
+  },
+};

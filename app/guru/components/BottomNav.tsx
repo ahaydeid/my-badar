@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactElement, useState, useRef, useEffect, useMemo, MouseEvent } from "react";
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { ReactElement, useState, useRef, useEffect, MouseEvent } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Home, CalendarDays, Fingerprint, Info, User, LogOut } from "lucide-react";
 
@@ -15,34 +14,30 @@ interface NavItem {
 }
 
 export default function BottomNav(): ReactElement | null {
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState<boolean>(false);
-  const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
-  const supabase = useMemo(() => createPagesBrowserClient(), []);
   const router = useRouter();
   const pathname = usePathname();
 
-  // Tutup dropdown ketika klik di luar elemen
+  // === CLOSE DROPDOWN on click outside ===
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setIsProfileDropdownOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside as unknown as EventListener);
     return () => document.removeEventListener("mousedown", handleClickOutside as unknown as EventListener);
   }, []);
 
-  // Jangan tampilkan di halaman login
+  // === HIDE on /login or special pages ===
   if (typeof pathname === "string" && pathname.startsWith("/login")) return null;
-
-  // Bisa tambahkan daftar halaman lain yang tidak perlu bottom nav
   const hideOnPaths = ["/some-fullscreen-page"];
   if (hideOnPaths.includes(pathname ?? "/")) return null;
 
-  // ✅ URL sudah disesuaikan dengan struktur guru
+  // === NAV ITEMS ===
   const items: NavItem[] = [
     { id: "home", label: "Home", icon: <Home className="w-6 h-6" />, href: "/guru" },
     { id: "jadwal", label: "Jadwal", icon: <CalendarDays className="w-6 h-6" />, href: "/guru/schedule" },
@@ -56,6 +51,7 @@ export default function BottomNav(): ReactElement | null {
     setIsProfileDropdownOpen((prev) => !prev);
   };
 
+  // === Dummy Logout ===
   const handleLogout = async (e?: MouseEvent<HTMLButtonElement>): Promise<void> => {
     e?.preventDefault();
     setIsProfileDropdownOpen(false);
@@ -63,24 +59,13 @@ export default function BottomNav(): ReactElement | null {
     setIsSigningOut(true);
 
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-
-      // Notifikasi opsional ke API
-      try {
-        await fetch("/api/auth", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ event: "SIGNED_OUT", session: null }),
-        });
-      } catch (err) {
-        console.warn("Failed to notify /api/auth on sign out:", err);
-      }
-
+      // simulasi delay logout
+      await new Promise((r) => setTimeout(r, 600));
+      console.log("User logged out (dummy)");
       router.push("/login");
     } catch (err) {
       console.error("Logout failed:", err);
-      alert("Gagal logout. Coba lagi.");
+      alert("Gagal logout (dummy).");
     } finally {
       setIsSigningOut(false);
     }
