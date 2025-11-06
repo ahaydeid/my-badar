@@ -31,8 +31,8 @@ export default function JadwalHariCard({ day, list }: Props): React.ReactElement
   const emptyClass = isToday ? "text-white/90" : "text-gray-500";
 
   return (
-    <section key={day.id} className="mb-4">
-      <div className={`rounded-xl border shadow-xs p-2 py-3 md:p-4 flex flex-row gap-4 transition duration-300 ${containerClass}`}>
+    <section key={day.id}>
+      <div className={`rounded border shadow-xs p-2 py-3 md:p-4 flex flex-row gap-4 transition duration-300 ${containerClass}`}>
         {/* Kolom Hari */}
         <div className="w-1/5 shrink-0 flex items-center justify-center">
           <h2 className={`text-center text-xl md:text-[16px] font-extrabold ${headerClass}`}>{day.nama}</h2>

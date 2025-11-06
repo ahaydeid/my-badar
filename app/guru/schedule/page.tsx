@@ -158,7 +158,7 @@ export default function Page(): React.ReactElement {
         ) : error ? (
           <div className="text-center text-red-600">Error: {error}</div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-2">
             {days.map((day) => {
               const list = (jadwalMap.get(day.id) ?? []).map((j) => ({
                 ...j,
