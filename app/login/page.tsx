@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -11,14 +12,18 @@ export default function LoginPage() {
       <main className="w-full max-w-md px-4 sm:px-6 pt-12 pb-6">
         <header className="flex items-center gap-3 px-2 mb-8 justify-center">
           <div className="flex items-center gap-3">
-            <div className="leading-tight">
-              <div className="text-xl font-extrabold text-sky-600">Badar Edu</div>
-              <div className="text-lg font-semibold text-gray-900">SMK Al Badar</div>
+            {/* Gambar logo di sisi kiri */}
+            <Image src="/img/albadar.png" alt="Logo Al Badar" width={48} height={48} className="object-contain rounded-md" priority />
+
+            {/* Teks di kanan logo */}
+            <div className="leading-tight text-center sm:text-left">
+              <div className="text-xl font-extrabold text-sky-600">My Badar</div>
+              <div className="text-lg font-semibold text-gray-900">SMK Al Badar Dangdeur</div>
             </div>
           </div>
         </header>
 
-        <section className="bg-white rounded-3xl shadow border border-gray-100 mt-6 p-6 sm:p-8">
+        <section className="bg-white rounded-lg shadow border border-gray-100 mt-6 p-6 sm:p-8">
           <h1 className="text-center text-2xl font-extrabold tracking-tight text-gray-800 mb-6">Login</h1>
 
           <form className="space-y-6">
@@ -28,7 +33,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="email"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 placeholder="example@mail.id"
                 type="email"
                 autoComplete="email"
@@ -41,7 +46,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="password"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 pr-12 transition duration-150"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 pr-12 transition duration-150"
                 placeholder="********"
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
