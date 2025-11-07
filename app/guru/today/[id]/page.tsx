@@ -42,11 +42,11 @@ export default function TodayPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center px-4 pb-20">
-      <div className="w-full max-w-md mt-3">
+      <div className="min-w-full mt-3">
         <p className="text-sm md:text-lg font-bold text-gray-800 mb-2 text-center">Jumat, 7 November 2025</p>
 
         {/* ====== Section: Card utama ====== */}
-        <section className="bg-gray-50 rounded-2xl shadow-sm border border-gray-200 p-3 mb-4">
+        <section className="p-3 mb-4">
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-bold">{isOverdue ? <span className="bg-red-600 text-white rounded px-2 p-1">Kelas terlewat</span> : <span className="bg-sky-500 text-white rounded p-1 px-2">{card.code}</span>}</h2>
 
