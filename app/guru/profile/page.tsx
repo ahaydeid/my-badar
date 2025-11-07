@@ -1,6 +1,6 @@
 "use client";
 
-import { User, KeyRound, Bell, HelpCircle, LogOut, Settings } from "lucide-react";
+import { User, KeyRound, Bell, HelpCircle, LogOut, Settings, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
@@ -16,15 +16,25 @@ const ProfilePage = () => {
     { id: 2, name: "Ganti Kata Sandi", icon: <KeyRound className="w-5 h-5 text-gray-600" />, action: () => router.push("/guru/profile/change-password") },
     { id: 3, name: "Notifikasi", icon: <Bell className="w-5 h-5 text-gray-600" />, action: () => router.push("/guru/profile/notifications") },
     { id: 4, name: "Pengaturan", icon: <Settings className="w-5 h-5 text-gray-600" />, action: () => router.push("/guru/profile/settings") },
-    { id: 5, name: "Bantuan", icon: <HelpCircle className="w-5 h-5 text-gray-600" />, action: () => router.push("/guru/profile/help") },
+    { id: 5, name: "Bantuan", icon: <HelpCircle className="w-5 h-5 text-gray-600" />, action: () => window.open("https://ahadi.my.id/chat/2712f917-65ba-4a55-9bce-4eb80e4ea7d9", "_blank") },
     { id: 6, name: "Logout", icon: <LogOut className="w-5 h-5 text-red-600" />, action: handleLogout },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 w-full">
       {/* Header */}
-      <header className="sticky top-0 z-20 bg-white text-center text-2xl md:text-[22px] font-extrabold py-4 border-b border-gray-200 shadow-sm">Profile</header>
+      <header className="sticky top-0 z-20 bg-white text-center text-2xl md:text-[22px] font-extrabold py-2 border-b border-gray-200 shadow-sm flex items-center justify-between px-4">
+        {/* Tombol Back (rata kiri) */}
+        <button onClick={() => window.history.back()} className="text-gray-700 hover:text-sky-600 transition-colors" aria-label="Kembali">
+          <ArrowLeft className="w-6 h-6" />
+        </button>
 
+        {/* Judul (rata tengah fleksibel) */}
+        <h1 className="flex-1 text-center">Profile</h1>
+
+        {/* Spacer kanan agar simetris */}
+        <div className="w-6" />
+      </header>
       {/* Profile summary section */}
       <section className="w-full flex flex-col md:flex-row md:items-center bg-white border-b border-gray-200 py-3 px-3 md:px-10">
         <div className="flex items-center gap-4">

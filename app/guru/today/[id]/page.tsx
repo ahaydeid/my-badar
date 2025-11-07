@@ -15,7 +15,7 @@ export default function TodayPage() {
     subject: "Algoritma Pemrograman",
     range: "08:15 - 09:00",
     jp: "1 JP",
-    prevNote: "Kemarin siswa kurang fokus di bagian looping.",
+    prevNote: "Kemarin siswa kurang fokus di bagian looping. Bingung katanya",
     detail: {
       guru: "Ahadi Hadi",
       ruangan: "Lab Komputer 1",
@@ -41,7 +41,7 @@ export default function TodayPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-4 pb-20">
+    <div className="min-h-screen bg-white flex flex-col items-center px-2 pb-20">
       <div className="min-w-full mt-3">
         <p className="text-sm md:text-lg font-bold text-gray-800 mb-2 text-center">Jumat, 7 November 2025</p>
 
@@ -108,17 +108,22 @@ export default function TodayPage() {
           </section>
 
           {/* ====== Section: Mapel + Detail ====== */}
-          <section className="mt-5 border-t border-gray-200 pt-4 flex items-center justify-between">
-            <div className="font-bold text-lg text-black">{card.subject}</div>
-            <button onClick={() => setShowDetail(true)} className="text-sm bg-sky-500 hover:bg-sky-600 gap-1 flex items-center text-white font-semibold rounded-md px-3 py-1.5 shadow-sm">
-              <Info /> Detail
-            </button>
+          <section className="mt-5 border-t border-gray-200">
+            <label className="block mt-3 text-gray-700 font-semibold mb-1">Materi hari ini</label>
+            <div className="flex items-center justify-between bg-gray-200  py-2 px-2">
+              <div className="font-bold text-lg text-black">{card.subject}</div>
+              <button onClick={() => setShowDetail(true)} className="text-sm bg-sky-500 hover:bg-sky-600 gap-1 flex items-center text-white font-semibold rounded-md px-3 py-1.5 shadow-sm">
+                <Info /> Detail
+              </button>
+            </div>
           </section>
 
           {/* ====== Section: Catatan sebelumnya ====== */}
-          <section className="border border-gray-200 rounded-lg p-3 bg-white mt-3">
-            <div className="mb-1 text-gray-700 font-bold underline">Catatan sebelumnya:</div>
-            <div className="text-gray-900 whitespace-pre-wrap leading-tight text-justify">{card.prevNote}</div>
+          <section className="bg-white mt-3 border-t border-gray-200">
+            <label className="block text-gray-700 font-semibold mb-1 mt-2">Catatan sebelumnya:</label>
+            <div className="bg-white p-1 border border-gray-200 rounded">
+              <div className="text-gray-700 whitespace-pre-wrap leading-tight text-justify">{card.prevNote}</div>
+            </div>
           </section>
 
           {/* ====== Section: Catatan input ====== */}

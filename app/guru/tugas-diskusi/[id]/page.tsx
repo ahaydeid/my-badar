@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Pin, MessageSquare, PlusCircle } from "lucide-react";
+import { Eye, Pin, Users, MessageSquare, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
 export default function ListTugasKelas() {
@@ -49,10 +49,17 @@ export default function ListTugasKelas() {
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-100">
           <h2 className="text-[16px] font-bold text-gray-800">12 MPLB 2</h2>
-          <button className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
-            <PlusCircle className="w-4 h-4" />
-            Tambah tugas
-          </button>
+
+          <div className="flex items-center gap-2">
+            <button className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
+              <Users className="w-4 h-4" />
+              Kelompok
+            </button>
+            <button className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
+              <PlusCircle className="w-4 h-4" />
+              Tambah tugas
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}

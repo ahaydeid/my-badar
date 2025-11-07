@@ -2,16 +2,29 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Camera, LogIn, LogOut } from "lucide-react";
+import { Camera, MapPin, Check, LogOut, Loader2 } from "lucide-react";
 
 const MapView = dynamic(() => import("./components/MapView"), { ssr: false });
 
-const Page = () => {
+export default function AbsenGuruPage() {
   const [currentTime, setCurrentTime] = useState<string>("--:--:--");
-  const [isPresent, setIsPresent] = useState(false);
   const [position, setPosition] = useState<[number, number] | null>(null);
+  const [waktuMasuk, setWaktuMasuk] = useState<string>("");
+  const [waktuKeluar, setWaktuKeluar] = useState<string>("");
+  const [isTerlambat, setIsTerlambat] = useState<boolean>(false);
+  const [sudahMasuk, setSudahMasuk] = useState<boolean>(false);
+  const [isDetecting, setIsDetecting] = useState<boolean>(false); // 👈 tambahan untuk spinner
 
-  // === Update jam setiap detik ===
+  // Jadwal dummy (2 kelas)
+  const jadwalHariIni = [
+    { id: 1, kelas: "12 MPLB 1", mulai: "07:30", selesai: "09:00" },
+    { id: 2, kelas: "11 AKL 2", mulai: "09:15", selesai: "11:15" },
+  ];
+
+  const jamMulaiPertama = jadwalHariIni[0].mulai;
+  const jamSelesaiTerakhir = jadwalHariIni[jadwalHariIni.length - 1].selesai;
+
+  // Waktu realtime
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -27,92 +40,170 @@ const Page = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleAbsenMasuk = () => {
-    setIsPresent(true);
-    alert("Absen Masuk dicatat (dummy).");
-  };
-
-  const handleAbsenKeluar = () => {
-    setIsPresent(false);
-    alert("Absen Keluar dicatat (dummy).");
+  const handleDetectLocation = (): void => {
+    setIsDetecting(true); // mulai deteksi
+    if (!navigator.geolocation) {
+      alert("Browser tidak mendukung geolokasi.");
+      setIsDetecting(false);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setPosition([pos.coords.latitude, pos.coords.longitude]);
+        setIsDetecting(false); // selesai deteksi
+      },
+      () => {
+        alert("Gagal mendeteksi lokasi.");
+        setIsDetecting(false);
+      },
+      { enableHighAccuracy: true }
+    );
   };
 
   const handleOpenCamera = () => {
     alert("Fitur kamera akan dibuka (dummy).");
   };
 
-  const handleDetectLocation = (): void => {
-    if (!navigator.geolocation) {
-      alert("Browser tidak mendukung geolokasi.");
-      return;
+  const handleAbsenMasuk = () => {
+    const now = new Date();
+    const waktuSekarang = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    setWaktuMasuk(waktuSekarang);
+
+    const [jamMulai, menitMulai] = jamMulaiPertama.split(":").map(Number);
+    const jamSekarang = now.getHours();
+    const menitSekarang = now.getMinutes();
+
+    if (jamSekarang > jamMulai || (jamSekarang === jamMulai && menitSekarang > menitMulai)) {
+      setIsTerlambat(true);
+    } else {
+      setIsTerlambat(false);
     }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setPosition([pos.coords.latitude, pos.coords.longitude]),
-      () => alert("Gagal mendeteksi lokasi."),
-      { enableHighAccuracy: true }
-    );
+
+    setSudahMasuk(true);
   };
 
+  const handleAbsenKeluar = () => {
+    const now = new Date();
+    const waktuSekarang = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    setWaktuKeluar(waktuSekarang);
+    alert("Absen keluar dicatat (dummy).");
+  };
+
+  const bolehKeluar = (() => {
+    const [jamAkhir, menitAkhir] = jamSelesaiTerakhir.split(":").map(Number);
+    const now = new Date();
+    const jamNow = now.getHours();
+    const menitNow = now.getMinutes();
+    return jamNow > jamAkhir || (jamNow === jamAkhir && menitNow >= menitAkhir);
+  })();
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-16">
       {/* Header */}
-      <h1 className="sticky top-0 z-20 bg-white text-center text-2xl font-extrabold py-3 border-b border-gray-200 shadow-sm">Absen Guru</h1>
+      <h1 className="sticky top-0 z-20 bg-white text-center text-[20px] font-extrabold py-3 border-b border-gray-200 shadow-sm">Absen Guru</h1>
 
       {/* Jam Digital */}
-      <div className="flex flex-col items-center justify-center py-6 bg-sky-500 text-white shadow-md">
-        <div className="text-6xl font-mono font-bold tracking-wider drop-shadow-md">{currentTime}</div>
-        <p className="mt-2 text-sm opacity-90">Waktu saat ini</p>
+      <div className="flex flex-col items-center justify-center py-6 bg-[#009BFF] text-white shadow-md">
+        <div className="text-[48px] md:text-[56px] font-mono font-extrabold tracking-widest drop-shadow-sm">{currentTime}</div>
+        <p className="mt-2 text-sm opacity-90">waktu saat ini</p>
       </div>
 
-      {/* Kontainer utama */}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Kiri - Map */}
-        <div className="bg-white shadow-md border border-gray-200 p-1 pb-4 flex flex-col rounded-xl">
-          <div className="flex-1">
-            <div className="w-full h-72">
-              {position ? <MapView lat={position[0]} lng={position[1]} /> : <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500 text-sm">Peta akan muncul setelah lokasi terdeteksi</div>}
-            </div>
+      {/* Peta */}
+      <div className="max-w-md mx-auto mt-4 px-2">
+        {/* Peta */}
+        <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
+          <div className="h-[280px] relative flex items-center justify-center">
+            {isDetecting ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
+                <Loader2 className="w-8 h-8 mb-2 animate-spin text-sky-600" />
+                <p>Mendeteksi lokasi...</p>
+              </div>
+            ) : position ? (
+              <MapView lat={position[0]} lng={position[1]} />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
+                <p>Deteksi lokasi untuk mendapat titik koordinat</p>
+              </div>
+            )}
           </div>
-          <button onClick={handleDetectLocation} className="mt-4 bg-sky-600 hover:bg-sky-700 text-white mx-5 py-2 rounded-lg transition">
-            Deteksi Lokasi
-          </button>
         </div>
 
-        {/* Kanan - Kamera dan Aksi Kehadiran */}
-        <div className="bg-white shadow-md border border-gray-200 rounded-xl p-4 flex flex-col justify-between">
-          <div>
-            <h2 className="text-lg mb-3 text-sky-700">Bukti Kehadiran</h2>
-            <button onClick={handleOpenCamera} className="w-full flex items-center justify-center gap-2 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition">
+        {/* Tombol aksi atas */}
+        <div className="flex gap-2 mt-3">
+          <button
+            onClick={handleDetectLocation}
+            disabled={isDetecting}
+            className={`flex-1 font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition ${isDetecting ? "bg-sky-300 cursor-not-allowed text-white" : "bg-[#009BFF] hover:bg-sky-600 text-white"}`}
+          >
+            <MapPin className="w-5 h-5" />
+            {isDetecting ? "Mendeteksi..." : "Deteksi Lokasi"}
+          </button>
+
+          {/* Tombol Kamera hanya muncul sebelum absen masuk */}
+          {!sudahMasuk && (
+            <button onClick={handleOpenCamera} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg border flex items-center justify-center gap-2 transition">
               <Camera className="w-5 h-5" />
-              Buka Kamera
+              Kamera
+            </button>
+          )}
+        </div>
+
+        {/* --- Tombol Absen Masuk & Keluar --- */}
+        <div className="mt-5 flex gap-2">
+          {/* Masuk */}
+          <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
+            <div className="flex justify-between items-center px-4 py-3">
+              <div className="text-center flex-1">
+                <p className="text-[18px] font-bold text-gray-800">{jamMulaiPertama}</p>
+                <p className="text-[12px] text-gray-500">Mulai</p>
+              </div>
+              <div className="w-px h-8 bg-gray-300" />
+              <div className="text-center flex-1">
+                <p className="text-[18px] font-bold text-gray-800">{waktuMasuk || "--:--"}</p>
+                <p className="text-[12px] text-gray-500">Masuk</p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleAbsenMasuk}
+              disabled={sudahMasuk}
+              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${sudahMasuk ? (isTerlambat ? "bg-red-600" : "bg-green-500") : "bg-green-500 hover:bg-green-700"}`}
+            >
+              {sudahMasuk ? isTerlambat ? "Terlambat!" : <Check className="w-6 h-6 text-white" /> : "Masuk"}
             </button>
           </div>
 
-          <div className="mt-6">
-            <h2 className="text-lg mb-3 text-sky-700">Aksi Kehadiran</h2>
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={handleAbsenMasuk}
-                disabled={isPresent}
-                className={`flex items-center justify-center gap-2 py-3 rounded-lg text-white transition ${isPresent ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}`}
-              >
-                <LogIn className="w-5 h-5" />
-                Absen Masuk
-              </button>
-              <button
-                onClick={handleAbsenKeluar}
-                disabled={!isPresent}
-                className={`flex items-center justify-center gap-2 py-3 rounded-lg text-white transition ${!isPresent ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
-              >
-                <LogOut className="w-5 h-5" />
-                Absen Keluar
-              </button>
+          {/* Keluar */}
+          <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
+            <div className="flex justify-between items-center px-4 py-3">
+              <div className="text-center flex-1">
+                <p className="text-[18px] font-bold text-gray-800">{jamSelesaiTerakhir}</p>
+                <p className="text-[12px] text-gray-500">Selesai</p>
+              </div>
+              <div className="w-px h-8 bg-gray-300" />
+              <div className="text-center flex-1">
+                <p className="text-[18px] font-bold text-gray-800">{waktuKeluar || "--:--"}</p>
+                <p className="text-[12px] text-gray-500">Keluar</p>
+              </div>
             </div>
+
+            <button
+              onClick={handleAbsenKeluar}
+              disabled={!sudahMasuk || !bolehKeluar}
+              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${!sudahMasuk || !bolehKeluar ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+            >
+              <LogOut className="w-5 h-5" />
+              Keluar
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default Page;
+}

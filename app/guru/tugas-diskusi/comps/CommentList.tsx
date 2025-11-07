@@ -20,9 +20,19 @@ export default function CommentList() {
       waktu: "3 jam",
       isi: "Setuju, menurut saya juga begitu!",
       like: 14,
-      reply: "5 orang lainnya membalas...",
+      reply: "Risa Febrianti dan 5 orang lainnya membalas...",
     },
   ];
+
+  // Tentukan warna berdasarkan nomor kelompok
+  const getBadgeColor = (role: string): string => {
+    if (role.includes("1")) return "bg-sky-600";
+    if (role.includes("2")) return "bg-green-600";
+    if (role.includes("3")) return "bg-amber-600";
+    if (role.includes("4")) return "bg-purple-600";
+    if (role.includes("5")) return "bg-pink-600";
+    return "bg-gray-600";
+  };
 
   return (
     <div className="mt-5">
@@ -39,7 +49,7 @@ export default function CommentList() {
           <div className="flex-1">
             <div className="bg-gray-200 rounded-lg p-3">
               <p className="font-semibold text-gray-800 text-sm">
-                {c.nama} <span className="text-[11px] bg-green-600 text-white px-2 py-0.5 rounded-md ml-1">{c.role}</span>
+                {c.nama} <span className={`text-[11px] ${getBadgeColor(c.role)} text-white px-2 py-0.5 rounded-md ml-1`}>{c.role}</span>
               </p>
               <p className="text-sm text-gray-700 mt-1 leading-snug">{c.isi}</p>
             </div>
