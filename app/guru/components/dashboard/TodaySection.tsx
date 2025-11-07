@@ -46,7 +46,7 @@ const schedules: ScheduleItem[] = [
 
 export default function TodaySection() {
   return (
-    <section className="mt-6 bg-white px-4 py-6">
+    <section className="mt-3 mb-3 bg-white px-4 py-6">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <h2 className="text-lg font-bold text-gray-900">Hari ini</h2>
