@@ -54,7 +54,7 @@ export default function TodayPage() {
 
             <div className="flex items-center gap-2">
               <span className="bg-yellow-400 text-black px-3 py-1.5 rounded-full text-lg">{card.range}</span>
-              <span className="bg-gray-700 text-white font-semibold px-3 py-1.5 rounded-full text-lg">{card.jp}</span>
+              <span className="bg-gray-700 text-white px-3 py-1.5 rounded-full text-lg">{card.jp}</span>
             </div>
           </div>
 

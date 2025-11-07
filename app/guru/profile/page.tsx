@@ -32,8 +32,8 @@ const ProfilePage = () => {
             <User className="w-8 h-8" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Guru Pengajar</h2>
-            <p className="text-sm text-gray-600">SMK Al Badar Dangdeur</p>
+            <h2 className="text-lg font-semibold text-gray-900">Ahadi</h2>
+            <p className="text-sm text-gray-600">Coding</p>
           </div>
         </div>
         <div className="hidden md:block mt-4 md:mt-0 text-sm text-gray-400">Terakhir login: 06 Nov 2025</div>

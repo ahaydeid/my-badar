@@ -31,7 +31,7 @@ const announcements: Announcement[] = [
 
 export default function AnnouncementSection() {
   return (
-    <section className="mb-3 px-3 py-6 bg-white ">
+    <section className="px-3 py-6 bg-white ">
       {/* Heading */}
       <h2 className="text-lg font-bold text-gray-900 mb-3">Pengumuman</h2>
 
