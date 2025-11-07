@@ -1,15 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Eye, Pin, MessageSquare, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
-export default function DetailTugasKelas() {
+export default function ListTugasKelas() {
   const [activeTab, setActiveTab] = useState("berjalan");
 
   // Semua tugas berdiri sendiri
   const tugasList = [
     {
+      id: "tugas-4",
       kategori: "Tugas Kelompok",
       gambar: "/img/albadar.png",
       judul: "Tugas 4",
@@ -18,6 +20,7 @@ export default function DetailTugasKelas() {
       stats: { lihat: 48, pin: 28, komentar: 47 },
     },
     {
+      id: "tugas-3",
       kategori: "Tugas Kelompok",
       gambar: "/img/albadar.png",
       judul: "Tugas 3",
@@ -26,6 +29,7 @@ export default function DetailTugasKelas() {
       stats: { lihat: 35, pin: 12, komentar: 18 },
     },
     {
+      id: "tugas-1",
       kategori: "Tugas Individu",
       gambar: "",
       judul: "Tugas 1",
@@ -74,12 +78,12 @@ export default function DetailTugasKelas() {
           <p className="text-center text-gray-500 text-sm py-10">Tidak ada tugas {activeTab === "berjalan" ? "berjalan" : "selesai"}.</p>
         ) : (
           filteredTasks.map((tugas, index) => (
-            <div key={`${tugas.judul}-${index}`} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <h3 className="text-[14px] text-gray-800 border-b border-gray-200 px-3 py-2 bg-gray-50">
+            <Link key={`${tugas.judul}-${index}`} href={`/guru/tugas-diskusi/detail/${tugas.id}`} className="block bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+              <h3 className="text-[14px] text-gray-800 px-3 py-2 bg-gray-50">
                 <span className="bg-amber-400 px-2 py-1">{tugas.kategori}</span>
               </h3>
 
-              <div className="p-3 border-b border-gray-200">
+              <div className="p-3">
                 {/* Gambar hanya muncul jika ada */}
                 {tugas.gambar && (
                   <div className="flex justify-center rounded p-3 mb-3">
@@ -102,7 +106,7 @@ export default function DetailTugasKelas() {
                   <MessageSquare className="w-4 h-4" /> {tugas.stats.komentar}
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>

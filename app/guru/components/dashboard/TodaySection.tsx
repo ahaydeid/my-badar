@@ -2,6 +2,7 @@
 
 // import React from "react";
 import { ExternalLink, Check } from "lucide-react";
+import Link from "next/link";
 
 type ScheduleItem = {
   kode: string;
@@ -54,9 +55,9 @@ export default function TodaySection() {
       {/* Schedule List */}
       <div className="space-y-2">
         {schedules.map((item, index) => (
-          <div
+          <Link
             key={index}
-            onClick={() => console.log("Clicked:", item.jurusan)} // nanti bisa diganti dengan link / aksi lain
+            href="/guru/today/detail"
             className="flex items-center justify-between bg-white border border-gray-100 rounded-lg px-4 py-3 cursor-pointer hover:bg-gray-50 hover:shadow-sm transition-all duration-200 active:scale-[0.98]"
           >
             {/* Left: Waktu block */}
@@ -90,7 +91,7 @@ export default function TodaySection() {
 
             {/* Right: External link icon */}
             <ExternalLink className="w-5 h-5 text-gray-500 shrink-0" />
-          </div>
+          </Link>
         ))}
       </div>
     </section>

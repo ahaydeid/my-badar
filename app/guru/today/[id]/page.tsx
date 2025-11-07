@@ -64,7 +64,7 @@ export default function TodayPage() {
               <div className="p-2">
                 <div className="flex items-center gap-3 mb-2">
                   {/* Tombol Absen Ulang */}
-                  <Link href="#" className="block w-[50%]">
+                  <Link href="/guru/attendance/" className="block w-[50%]">
                     <span className="flex items-center justify-center gap-2 rounded-md py-3 shadow font-extrabold text-lg text-white transition bg-yellow-500 hover:bg-yellow-400">
                       <RefreshCcw className="w-5 h-5 shrink-0" />
                       Absen Ulang
@@ -92,7 +92,7 @@ export default function TodayPage() {
             ) : (
               <div className="flex gap-3">
                 {/* Tombol Buka Absen */}
-                <Link href="#" className="flex-1 block">
+                <Link href="/guru/attendance/" className="flex-1 block">
                   <span className="block bg-sky-500 text-white font-extrabold text-lg rounded py-3 text-center">Buka Absen</span>
                 </Link>
 

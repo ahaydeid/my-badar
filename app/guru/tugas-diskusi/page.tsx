@@ -1,13 +1,17 @@
 "use client";
 
+import Link from "next/link";
+
 export default function TugasDanDiskusi() {
   const data = [
     {
+      id: "12-mplb-1",
       nama: "12 MPLB 1",
       berjalan: { Individu: "-", Kelompok: 1, Quis: 1 },
       selesai: { Individu: 3, Kelompok: 2, Quis: 5 },
     },
     {
+      id: "12-mplb-2",
       nama: "12 MPLB 2",
       berjalan: { Individu: "-", Kelompok: 1, Quis: 1 },
       selesai: { Individu: 3, Kelompok: 2, Quis: 5 },
@@ -24,7 +28,7 @@ export default function TugasDanDiskusi() {
       {/* Grid Card */}
       <div className="grid grid-cols-2 gap-4">
         {data.map((kelas) => (
-          <div key={kelas.nama} className="border border-gray-200 bg-white rounded-xl p-4 flex flex-col justify-between">
+          <Link key={kelas.nama} href={`/guru/tugas-diskusi/${kelas.id}`} className="border border-gray-200 bg-white rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition-shadow duration-200">
             <div>
               <h3 className="text-[15px] font-bold text-gray-900 mb-3">{kelas.nama}</h3>
 
@@ -50,7 +54,7 @@ export default function TugasDanDiskusi() {
                 ))}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
