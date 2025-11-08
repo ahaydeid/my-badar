@@ -1,5 +1,6 @@
 "use client";
 
+import { Megaphone } from "lucide-react";
 import Link from "next/link";
 
 export default function MateriDanDiskusi() {
@@ -37,14 +38,18 @@ export default function MateriDanDiskusi() {
   ];
 
   return (
-    <section className="bg-gray-50 w-full rounded-2xl p-5 pb-18">
+    <section className="bg-gray-50 w-full rounded-2xl pb-18">
       {/* Judul Section */}
-      <div className="mb-4">
+      <div className="mb-6 sticky p-3 shadow top-0 bg-gray-50 z-10 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800">Materi &amp; Diskusi</h2>
+        <button className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
+          <Megaphone className="w-4 h-4" />
+          Broadcast Materi
+        </button>
       </div>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 px-4 gap-4">
         {data.map((kelas) => {
           const materiBerjalanEntries = Object.entries(kelas.berjalan);
           const materiAda = materiBerjalanEntries.some(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0);
@@ -52,7 +57,7 @@ export default function MateriDanDiskusi() {
           return (
             <Link key={kelas.nama} href={`/guru/materi-diskusi/${kelas.id}`} className="border border-gray-200 bg-white rounded-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-200">
               <div>
-                <div className=" py-1 text-white mb-3 text-center rounded-t-sm bg-gray-900">
+                <div className=" py-1 text-white text-center rounded-t-sm bg-gray-900">
                   <span className="text-lg font-bold">{kelas.nama}</span>
                 </div>
                 <div className="p-4">
@@ -65,15 +70,15 @@ export default function MateriDanDiskusi() {
                       {materiBerjalanEntries
                         .filter(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0)
                         .map(([jenis, jumlah]) => (
-                          <div key={jenis} className="flex justify-between items-center bg-violet-500 text-white text-[13px] rounded-md px-3 py-1">
+                          <div key={jenis} className="flex justify-between items-center bg-violet-500 text-white text-[13px] rounded-sm pl-3 pr-1 py-1">
                             <span>{jenis}</span>
-                            <span className="bg-violet-600 text-white rounded-sm px-1.5 py-px font-bold">{jumlah}</span>
+                            <span className="text-white/90 rounded-sm px-1.5 border py-px">{jumlah}</span>
                           </div>
                         ))}
                     </div>
                   ) : (
                     // Jika tidak ada materi aktif
-                    <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1 mb-3">
+                    <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-sm pl-3 pr-1 py-1 mb-3">
                       <span>Tidak ada materi aktif</span>
                     </div>
                   )}
@@ -82,9 +87,9 @@ export default function MateriDanDiskusi() {
                   <p className="text-[14px] font-semibold text-gray-700 mb-2">Materi selesai</p>
                   <div className="flex flex-col gap-2">
                     {Object.entries(kelas.selesai).map(([jenis, jumlah]) => (
-                      <div key={jenis} className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1">
+                      <div key={jenis} className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-sm pl-3 pr-1 py-1">
                         <span>{jenis}</span>
-                        <span className="bg-gray-300 text-gray-800 rounded-sm px-1.5 py-px font-bold">{jumlah}</span>
+                        <span className="text-gray-700 rounded-sm px-1.5 border border-gray-400 py-px">{jumlah}</span>
                       </div>
                     ))}
                   </div>

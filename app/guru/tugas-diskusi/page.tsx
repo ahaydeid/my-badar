@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Megaphone } from "lucide-react";
 
 export default function TugasDanDiskusi() {
   const data = [
@@ -37,14 +38,18 @@ export default function TugasDanDiskusi() {
   ];
 
   return (
-    <section className="bg-gray-50 w-full rounded-2xl p-6 pb-20 shadow-sm">
+    <section className="bg-gray-50 w-full rounded-2xl pb-20 shadow-sm">
       {/* Judul Section */}
-      <div className="mb-6">
+      <div className="mb-6 sticky p-3 shadow top-0 bg-gray-50 z-10 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800 tracking-tight">Tugas &amp; Diskusi</h2>
+        <button className="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
+          <Megaphone className="w-4 h-4" />
+          Broadcast Tugas
+        </button>
       </div>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 px-4 gap-4">
         {data.map((kelas) => {
           const tugasBerjalanEntries = Object.entries(kelas.berjalan);
           const tugasAda = tugasBerjalanEntries.some(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0);
@@ -53,7 +58,7 @@ export default function TugasDanDiskusi() {
             <Link key={kelas.nama} href={`/guru/tugas-diskusi/${kelas.id}`} className="group border border-gray-200 bg-white rounded-sm flex flex-col justify-between hover:shadow-md hover:border-gray-300 transition-all duration-200">
               {/* Header */}
               <div className="py-1 text-white text-center rounded-t-sm bg-gray-900">
-                <span className="text-base font-bold tracking-tight">{kelas.nama}</span>
+                <span className="text-lg font-bold tracking-tight">{kelas.nama}</span>
               </div>
 
               {/* Content */}
@@ -67,15 +72,15 @@ export default function TugasDanDiskusi() {
                     {tugasBerjalanEntries
                       .filter(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0)
                       .map(([jenis, jumlah]) => (
-                        <div key={jenis} className="flex justify-between items-center bg-sky-500 text-white text-[13px] rounded-md px-3 py-1">
+                        <div key={jenis} className="flex justify-between items-center bg-sky-500 text-white text-[13px] rounded-sm pl-3 pr-1 py-1">
                           <span>{jenis}</span>
-                          <span className="bg-sky-600 text-white rounded-sm px-1.5 py-px font-bold">{jumlah}</span>
+                          <span className="text-white/90 rounded-sm px-1.5 py-px border">{jumlah}</span>
                         </div>
                       ))}
                   </div>
                 ) : (
                   // Jika tidak ada tugas berjalan
-                  <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1 mb-4">
+                  <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-sm pl-3 pr-1 py-1 mb-4">
                     <span>Tidak ada tugas</span>
                   </div>
                 )}
@@ -84,9 +89,9 @@ export default function TugasDanDiskusi() {
                 <p className="text-[14px] font-semibold text-gray-700 mb-2">Tugas selesai</p>
                 <div className="flex flex-col gap-2">
                   {Object.entries(kelas.selesai).map(([jenis, jumlah]) => (
-                    <div key={jenis} className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1">
+                    <div key={jenis} className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-sm pl-3 pr-1 py-1">
                       <span>{jenis}</span>
-                      <span className="bg-gray-300 text-gray-800 rounded-sm px-1.5 py-px font-bold">{jumlah}</span>
+                      <span className="text-gray-700 rounded-sm px-1.5 py-px border border-gray-400">{jumlah}</span>
                     </div>
                   ))}
                 </div>

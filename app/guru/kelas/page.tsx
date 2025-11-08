@@ -10,16 +10,16 @@ export default function DaftarKelas() {
   ];
 
   return (
-    <section className="bg-gray-50 w-full p-5 pb-18">
+    <section className="bg-gray-50 w-full pb-18">
       {/* Judul Section */}
-      <div className="mb-4">
+      <div className="mb-4 sticky top-0 bg-gray-50 z-10 p-4 shadow">
         <h2 className="text-lg font-semibold text-gray-800">
           Daftar kelas <span className="text-gray-500 text-sm font-normal">(yang diampu)</span>
         </h2>
       </div>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4">
         {kelasList
           .sort((a, b) => a.nama.localeCompare(b.nama)) // urut berdasarkan abjad
           .map((kelas) => (
@@ -28,22 +28,21 @@ export default function DaftarKelas() {
               <div className="py-1 text-white mb-3 text-center rounded-t-sm bg-gray-900">
                 <span className="text-lg font-bold">{kelas.nama}</span>
               </div>
-
               <div className="px-4 pb-4">
                 <p className="text-sm text-gray-500 mb-2">{kelas.siswa} siswa</p>
 
                 {/* Bagian Tugas */}
                 <p className="text-sm font-semibold text-gray-700 mb-1">Tugas</p>
                 <div className="flex gap-2 flex-wrap mb-3">
-                  <span className="text-[13px] bg-green-500 text-white font-semibold rounded-sm px-3 py-1 flex items-center gap-1 shadow-sm">Berjalan ({kelas.tugasBerjalan})</span>
-                  <span className="text-[13px] bg-gray-300 text-white font-semibold rounded-sm px-3 py-1 flex items-center gap-1 shadow-sm">Selesai ({kelas.tugasSelesai})</span>
+                  <span className="text-[13px] bg-green-500 text-white font-semibold rounded-xs px-3 py-1 flex items-center gap-1">Berjalan ({kelas.tugasBerjalan})</span>
+                  <span className="text-[13px] bg-gray-300 text-white font-semibold rounded-xs px-3 py-1 flex items-center gap-1">Selesai ({kelas.tugasSelesai})</span>
                 </div>
 
                 {/* Bagian Materi */}
                 <p className="text-sm font-semibold text-gray-700 mb-1">Materi</p>
                 <div className="flex gap-2 flex-wrap">
-                  <span className="text-[13px] bg-violet-500 text-white font-semibold rounded-sm px-3 py-1 flex items-center gap-1 shadow-sm">Berjalan ({kelas.materiBerjalan})</span>
-                  <span className="text-[13px] bg-gray-300 text-white font-semibold rounded-sm px-3 py-1 flex items-center gap-1 shadow-sm">Selesai ({kelas.materiSelesai})</span>
+                  <span className="text-[13px] bg-violet-500 text-white font-semibold rounded-xs px-3 py-1 flex items-center gap-1">Berjalan ({kelas.materiBerjalan})</span>
+                  <span className="text-[13px] bg-gray-300 text-white font-semibold rounded-xs px-3 py-1 flex items-center gap-1">Selesai ({kelas.materiSelesai})</span>
                 </div>
               </div>
             </div>
