@@ -174,6 +174,9 @@ export default function TambahKelompok({ onClose }: TambahKelompokProps) {
               )}
             </div>
           )}
+
+          {/* Jika sudah didelegasikan, tampilkan label info */}
+          {delegasiAktif && <div className="mt-3 p-2 text-xs text-gray-600 bg-amber-300 font-light text-center italic"> --- Penambahan anggota didelegasikan ke ketua --- </div>}
         </div>
 
         {/* Tombol Simpan */}

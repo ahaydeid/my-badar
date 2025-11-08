@@ -63,7 +63,7 @@ export default function CommentList() {
           <div className="flex-1">
             <div className="bg-gray-200 rounded-lg p-3">
               <p className="font-semibold text-gray-800 text-sm">
-                {c.nama} <span className={`text-[11px] ${getBadgeColor(c.role)} text-white px-2 py-0.5 rounded-md ml-1`}>{c.role}</span>
+                {c.nama} <span className={`text-[11px] ${getBadgeColor(c.role)} text-white px-2 py-0.5 rounded-full ml-1`}>{c.role}</span>
               </p>
               <p className="text-sm text-gray-700 mt-1 leading-snug">{c.isi}</p>
             </div>
