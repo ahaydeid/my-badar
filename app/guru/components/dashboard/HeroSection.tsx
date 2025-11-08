@@ -24,7 +24,7 @@ export default function HeroSection() {
     <section className="relative w-full bg-linear-to-r from-sky-700 via-sky-600 to-sky-400 rounded-b-4xl shadow-md pt-2 pb-16 px-6 z-10 overflow-visible">
       {/* Top - School name */}
       <div className="flex items-center gap-3 border-b border-white pb-1 mb-2">
-        <div className="bg-white/90 p-1.5 rounded-full shadow-md flex items-center justify-center">
+        <div className="bg-white rounded-full shadow-md flex items-center justify-center">
           <Image src="/img/albadar.png" alt="Logo SMK Al Badar Dangdeur" width={28} height={28} className="rounded-sm" priority />
         </div>
         <h1 className="text-lg font-semibold text-white tracking-wide drop-shadow-md">SMK Al Badar Dangdeur</h1>
@@ -34,8 +34,8 @@ export default function HeroSection() {
       <div className="flex justify-between items-center">
         {/* Left side - Greeting */}
         <div className="w-[40%]">
-          <h1 className="text-sm font-semibold text-white flex items-center gap-2 drop-shadow-md">
-            {greeting} <span className="text-2xl leading-none">{emoji}</span>
+          <h1 className="text-sm font-semibold text-white flex gap-2 drop-shadow-md">
+            {greeting} <span className="text-xl leading-none relative -top-1">{emoji}</span>
           </h1>
 
           {/* Tanggal hari ini */}

@@ -48,13 +48,13 @@ export default function TodayPage() {
         {/* ====== Section: Card utama ====== */}
         <section className="p-3 mb-4">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold">{isOverdue ? <span className="bg-red-600 text-white rounded px-2 p-1">Kelas terlewat</span> : <span className="bg-sky-500 text-white rounded p-1 px-2">{card.code}</span>}</h2>
+            <h2 className="font-bold">{isOverdue ? <span className="bg-red-600 text-white px-2 p-1">Kelas terlewat</span> : <span className="bg-sky-500 text-white p-1 px-2">{card.code}</span>}</h2>
 
-            <h3 className="text-3xl font-extrabold text-gray-900">{card.title}</h3>
+            <h3 className="text-4xl font-extrabold text-gray-900">{card.title}</h3>
 
             <div className="flex items-center gap-2">
-              <span className="bg-yellow-400 text-black px-3 py-1.5 rounded-full text-lg">{card.range}</span>
-              <span className="bg-gray-700 text-white px-3 py-1.5 rounded-full text-lg">{card.jp}</span>
+              <span className="bg-yellow-400 text-black px-3 py-1.5 rounded-full text-xs">{card.range}</span>
+              <span className="bg-gray-700 text-white px-3 py-1.5 rounded-full text-xs">{card.jp}</span>
             </div>
           </div>
 
