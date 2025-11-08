@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import dayjs from "dayjs";
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import CalendarGrid from "./comps/CalendarGrid";
 
 const Page = () => {
@@ -50,12 +50,9 @@ const Page = () => {
   return (
     <section className="w-full min-h-screen bg-linear-to-br from-sky-50 to-white px-4 py-6">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-            <CalendarDays className="w-6 h-6 text-sky-600" />
-            Agenda Mengajar
-          </h1>
+      <div>
+        <div className="flex items-center justify-center mb-10">
+          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">Agenda Mengajar</h1>
         </div>
 
         <div className="flex items-center justify-end gap-3">

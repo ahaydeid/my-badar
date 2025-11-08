@@ -16,8 +16,8 @@ export default function MenuSection() {
     { title: "Tugas & Diskusi", icon: <MessagesSquare className="w-7 h-7 text-blue-500" />, href: "/guru/tugas-diskusi", bgColor: "bg-blue-50" },
     { title: "Kelas", icon: <BookOpen className="w-7 h-7 text-sky-600" />, href: "/guru/kelas", bgColor: "bg-sky-50" },
     { title: "Jadwal", icon: <Calendar className="w-7 h-7 text-amber-500" />, href: "/guru/schedule", bgColor: "bg-amber-50" },
-    { title: "Log Absen & Nilai", icon: <CalendarClock className="w-7 h-7 text-rose-600" />, href: "/guru/log-absen", bgColor: "bg-rose-50" },
-    { title: "Lihat Modul", icon: <Layers className="w-7 h-7 text-lime-600" />, href: "/guru/modul", bgColor: "bg-lime-50" },
+    { title: "Log Absen & Nilai", icon: <CalendarClock className="w-7 h-7 text-rose-600" />, href: "/guru/log-absen-nilai", bgColor: "bg-rose-50" },
+    { title: "Lihat Modul", icon: <Layers className="w-7 h-7 text-lime-600" />, href: "/guru/module", bgColor: "bg-lime-50" },
     { title: "Pengumuman", icon: <Megaphone className="w-7 h-7 text-gray-800" />, href: "/guru/pengumuman", bgColor: "bg-gray-100" },
   ];
 

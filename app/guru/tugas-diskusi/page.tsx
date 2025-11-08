@@ -52,7 +52,7 @@ export default function TugasDanDiskusi() {
           return (
             <Link key={kelas.nama} href={`/guru/tugas-diskusi/${kelas.id}`} className="group border border-gray-200 bg-white rounded-sm flex flex-col justify-between hover:shadow-md hover:border-gray-300 transition-all duration-200">
               {/* Header */}
-              <div className="py-2 text-white text-center rounded-t-sm bg-gray-900">
+              <div className="py-1 text-white text-center rounded-t-sm bg-gray-900">
                 <span className="text-base font-bold tracking-tight">{kelas.nama}</span>
               </div>
 

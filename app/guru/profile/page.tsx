@@ -1,6 +1,6 @@
 "use client";
 
-import { User, KeyRound, Bell, HelpCircle, LogOut, Settings, ArrowLeft, Edit3 } from "lucide-react";
+import { User, KeyRound, Bell, HelpCircle, LogOut, Settings, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
@@ -78,14 +78,6 @@ const ProfilePage = () => {
             <p className="text-sm text-gray-600">Coding</p>
           </div>
         </div>
-
-        {/* Tombol edit selalu kanan */}
-        <button
-          onClick={() => router.push("/guru/profile/edit")}
-          className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 px-3 py-1.5 text-lg text-gray-700 font-medium hover:bg-gray-50 rounded-2xl transition"
-        >
-          <Edit3 className="w-4 h-4" />Edit
-        </button>
       </section>
 
       {/* Menu list */}
