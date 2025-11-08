@@ -6,14 +6,14 @@ import { useState } from "react";
 import CommentInput from "../../comps/CommentInput";
 import CommentList from "../../comps/CommentList";
 
-export default function DetailTugasKelas() {
-  const tugas = {
+export default function DetailMateriKelas() {
+  const materi = {
     kelas: "12 MPLB 2",
-    kategori: "Tugas Kelompok",
+    kategori: "Modul Pembelajaran",
     gambar: "/img/albadar.png",
-    judul: "Tugas 4",
-    deskripsi: "Ketentuan: 1. Tugas dikerjakan",
-    stats: { lihat: 48, pin: 28, komentar: 47 },
+    judul: "Materi 4: Komunikasi Bisnis",
+    deskripsi: "Pelajari dasar-dasar komunikasi bisnis yang efektif dan profesional di lingkungan kerja.",
+    stats: { lihat: 83, pin: 21, komentar: 36 },
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -47,12 +47,12 @@ export default function DetailTugasKelas() {
       {/* Header */}
       <div className="sticky top-0 z-20 bg-gray-100 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         {/* Tombol Back (rata kiri) */}
-        <button onClick={() => window.history.back()} className="text-gray-700 hover:text-sky-600 transition-colors" aria-label="Kembali">
+        <button onClick={() => window.history.back()} className="text-gray-700 hover:text-violet-600 transition-colors" aria-label="Kembali">
           <ArrowLeft className="w-5 h-5" />
         </button>
 
         {/* Judul (rata tengah) */}
-        <h2 className="text-[16px] font-bold text-gray-800 text-center flex-1">{tugas.judul}</h2>
+        <h2 className="text-[16px] font-bold text-gray-800 text-center flex-1">{materi.judul}</h2>
 
         {/* Spacer agar tombol kanan seimbang */}
         <div className="w-5" />
@@ -61,38 +61,38 @@ export default function DetailTugasKelas() {
       {/* Konten */}
       <div className="p-4">
         {/* Kategori */}
-        <span className="inline-block text-sm text-gray-800 bg-amber-400 px-2 py-0.5">{tugas.kategori}</span>
+        <span className="inline-block text-sm bg-violet-500 text-white px-2 py-0.5">{materi.kategori}</span>
 
         {/* Gambar */}
-        {tugas.gambar && (
+        {materi.gambar && (
           <div className="flex justify-center p-3 my-3">
-            <Image src={tugas.gambar} alt={tugas.judul} width={400} height={400} unoptimized className="rounded-md" />
+            <Image src={materi.gambar} alt={materi.judul} width={400} height={400} unoptimized className="rounded-md" />
           </div>
         )}
 
         {/* Deskripsi */}
-        <h3 className="text-[15px] font-bold text-gray-800 mt-2 mb-1">{tugas.judul}</h3>
-        <p className="text-sm text-gray-700 mb-3">{tugas.deskripsi}</p>
+        <h3 className="text-[15px] font-bold text-gray-800 mt-2 mb-1">{materi.judul}</h3>
+        <p className="text-sm text-gray-700 mb-3">{materi.deskripsi}</p>
 
         {/* Tombol Note + Statistik */}
         <div className="flex flex-wrap items-center gap-3 bg-gray-100 border border-gray-200 rounded-lg px-2 py-1 text-sm text-gray-700">
           <button className="flex items-center gap-1 bg-white border border-gray-300 rounded-lg px-4 py-1 hover:shadow-sm transition-all">
-            <Pin className="w-4 h-4" />
+            <Pin className="w-4 h-4 text-violet-600" />
             Note
           </button>
 
           <div className="flex items-center gap-4 ml-3">
             <div className="flex items-center gap-1">
-              <Eye className="w-4 h-4" /> {tugas.stats.lihat}
+              <Eye className="w-4 h-4 text-violet-600" /> {materi.stats.lihat}
             </div>
 
-            {/* Bagian yang dimodifikasi */}
-            <div className="flex items-center gap-1 cursor-pointer hover:text-sky-600 transition-colors" onClick={() => setShowModal(true)}>
-              <Pin className="w-4 h-4" /> {tugas.stats.pin}
+            {/* Bagian klik modal */}
+            <div className="flex items-center gap-1 cursor-pointer hover:text-violet-600 transition-colors" onClick={() => setShowModal(true)}>
+              <Pin className="w-4 h-4" /> {materi.stats.pin}
             </div>
 
             <div className="flex items-center gap-1">
-              <MessageSquare className="w-4 h-4" /> {tugas.stats.komentar}
+              <MessageSquare className="w-4 h-4 text-violet-600" /> {materi.stats.komentar}
             </div>
           </div>
         </div>
@@ -113,12 +113,12 @@ export default function DetailTugasKelas() {
               <X className="w-5 h-5" />
             </button>
 
-            <h2 className="text-center text-lg font-semibold text-gray-800 mb-3">Noted</h2>
+            <h2 className="text-center text-lg font-semibold text-gray-800 mb-3">Siswa yang memberi Note</h2>
 
             <div className="space-y-2 max-h-100 overflow-y-auto">
               {siswaNotes.map((nama, i) => (
-                <div key={i} className="flex items-center gap-3 px-1 py-2 hover:bg-sky-50 transition">
-                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-sky-100 text-sky-600">
+                <div key={i} className="flex items-center gap-3 px-1 py-2 hover:bg-violet-50 transition">
+                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-100 text-violet-600">
                     <User className="w-4 h-4" />
                   </div>
                   <p className="text-sm text-gray-800 font-medium">{nama}</p>

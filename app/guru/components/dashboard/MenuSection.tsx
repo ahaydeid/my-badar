@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, MessagesSquare, CalendarClock, Layers, Calendar, Megaphone } from "lucide-react";
+import { BookOpen, MessagesSquare, BookOpenText, CalendarClock, Layers, Calendar, Megaphone } from "lucide-react";
 
 type Menu = {
   title: string;
@@ -12,8 +12,9 @@ type Menu = {
 
 export default function MenuSection() {
   const menus: Menu[] = [
-    { title: "Kelas", icon: <BookOpen className="w-7 h-7 text-sky-600" />, href: "/guru/kelas", bgColor: "bg-sky-50" },
+    { title: "Materi & Diskusi", icon: <BookOpenText className="w-7 h-7 text-blue-500" />, href: "/guru/materi-diskusi", bgColor: "bg-blue-50" },
     { title: "Tugas & Diskusi", icon: <MessagesSquare className="w-7 h-7 text-blue-500" />, href: "/guru/tugas-diskusi", bgColor: "bg-blue-50" },
+    { title: "Kelas", icon: <BookOpen className="w-7 h-7 text-sky-600" />, href: "/guru/kelas", bgColor: "bg-sky-50" },
     { title: "Jadwal", icon: <Calendar className="w-7 h-7 text-amber-500" />, href: "/guru/schedule", bgColor: "bg-amber-50" },
     { title: "Log Absen & Nilai", icon: <CalendarClock className="w-7 h-7 text-rose-600" />, href: "/guru/log-absen", bgColor: "bg-rose-50" },
     { title: "Lihat Modul", icon: <Layers className="w-7 h-7 text-lime-600" />, href: "/guru/modul", bgColor: "bg-lime-50" },

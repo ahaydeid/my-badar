@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Eye, Pin, Users, MessageSquare, PlusCircle } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ListTugasKelas() {
   const [activeTab, setActiveTab] = useState("berjalan");
+  const router = useRouter();
 
   // Semua tugas berdiri sendiri
   const tugasList = [
@@ -51,10 +53,11 @@ export default function ListTugasKelas() {
           <h2 className="text-[16px] font-bold text-gray-800">12 MPLB 2</h2>
 
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
+            <button onClick={() => router.push("/guru/tugas-diskusi/buat-kelompok")} className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
               <Users className="w-4 h-4" />
               Kelompok
             </button>
+
             <button className="flex items-center gap-1 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-md px-3 py-1.5 transition-all duration-200">
               <PlusCircle className="w-4 h-4" />
               Tambah tugas

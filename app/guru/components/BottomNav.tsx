@@ -25,7 +25,7 @@ export default function BottomNav(): ReactElement | null {
     { id: "home", label: "Home", icon: <Home className="w-6 h-6" />, href: "/guru" },
     { id: "tinjau-izin", label: "Tinjau Izin", icon: <ClipboardCheck className="w-6 h-6" />, href: "/guru/tinjau-izin" },
     { id: "absen", label: "Absen", icon: <Fingerprint className="w-6 h-6" />, href: "/guru/guru-attendance" },
-    { id: "agenda", label: "Agenda Ajar", icon: <CalendarDays className="w-6 h-6" />, href: "/guru/agenda" },
+    { id: "agenda", label: "Agenda", icon: <CalendarDays className="w-6 h-6" />, href: "/guru/agenda" },
     { id: "profile", label: "Profile", icon: <User className="w-6 h-6" />, href: "/guru/profile" },
   ];
 

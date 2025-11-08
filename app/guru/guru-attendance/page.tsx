@@ -106,12 +106,12 @@ export default function AbsenGuruPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
       {/* Header */}
-      <h1 className="sticky top-0 z-20 bg-white text-center text-[20px] font-extrabold py-3 border-b border-gray-200 shadow-sm">Absen Guru</h1>
+      <h1 className="sticky top-0 z-20 bg-white text-center text-[20px] font-extrabold py-1 border-b border-gray-200 shadow-sm">Absen Guru</h1>
 
       {/* Jam Digital */}
-      <div className="flex flex-col items-center justify-center py-6 bg-[#009BFF] text-white shadow-md">
+      <div className="flex flex-col items-center justify-center py-1 bg-[#009BFF] text-white shadow-md">
         <div className="text-[48px] md:text-[56px] font-mono font-extrabold tracking-widest drop-shadow-sm">{currentTime}</div>
-        <p className="mt-2 text-sm opacity-90">waktu saat ini</p>
+        <p className="text-sm opacity-90">waktu saat ini</p>
       </div>
 
       {/* Peta */}
