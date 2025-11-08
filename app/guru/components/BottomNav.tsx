@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Home, CalendarDays, Fingerprint, ClipboardCheck, User } from "lucide-react";
 import Link from "next/link";
 
-type Item = "home" | "agenda-ajar" | "absen" | "tinjau-izin" | "profile";
+type Item = "home" | "agenda" | "absen" | "tinjau-izin" | "profile";
 
 interface NavItem {
   id: Item;
@@ -25,7 +25,7 @@ export default function BottomNav(): ReactElement | null {
     { id: "home", label: "Home", icon: <Home className="w-6 h-6" />, href: "/guru" },
     { id: "tinjau-izin", label: "Tinjau Izin", icon: <ClipboardCheck className="w-6 h-6" />, href: "/guru/tinjau-izin" },
     { id: "absen", label: "Absen", icon: <Fingerprint className="w-6 h-6" />, href: "/guru/guru-attendance" },
-    { id: "agenda-ajar", label: "Agenda Ajar", icon: <CalendarDays className="w-6 h-6" />, href: "/guru/agenda-ajar" },
+    { id: "agenda", label: "Agenda Ajar", icon: <CalendarDays className="w-6 h-6" />, href: "/guru/agenda" },
     { id: "profile", label: "Profile", icon: <User className="w-6 h-6" />, href: "/guru/profile" },
   ];
 
