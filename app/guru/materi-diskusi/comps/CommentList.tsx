@@ -55,7 +55,7 @@ export default function CommentList() {
       {comments.map((c) => (
         <div key={c.id} className="flex items-start gap-3 mb-5">
           {/* Avatar */}
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-sky-100 text-sky-600 shadow-sm">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-sky-100 text-sky-600">
             <User className="w-5 h-5" />
           </div>
 

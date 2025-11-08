@@ -77,13 +77,13 @@ export default function DetailMateriKelas() {
         {/* Tombol Note + Statistik */}
         <div className="flex flex-wrap items-center gap-3 bg-gray-100 border border-gray-200 rounded-lg px-2 py-1 text-sm text-gray-700">
           <button className="flex items-center gap-1 bg-white border border-gray-300 rounded-lg px-4 py-1 hover:shadow-sm transition-all">
-            <Pin className="w-4 h-4 text-violet-600" />
+            <Pin className="w-4 h-4" />
             Note
           </button>
 
           <div className="flex items-center gap-4 ml-3">
             <div className="flex items-center gap-1">
-              <Eye className="w-4 h-4 text-violet-600" /> {materi.stats.lihat}
+              <Eye className="w-4 h-4" /> {materi.stats.lihat}
             </div>
 
             {/* Bagian klik modal */}
@@ -92,7 +92,7 @@ export default function DetailMateriKelas() {
             </div>
 
             <div className="flex items-center gap-1">
-              <MessageSquare className="w-4 h-4 text-violet-600" /> {materi.stats.komentar}
+              <MessageSquare className="w-4 h-4" /> {materi.stats.komentar}
             </div>
           </div>
         </div>

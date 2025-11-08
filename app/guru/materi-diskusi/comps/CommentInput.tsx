@@ -1,7 +1,7 @@
 "use client";
 
 import { Send } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 export default function CommentInput() {
@@ -13,11 +13,6 @@ export default function CommentInput() {
     alert(`Komentar dikirim: ${comment}`);
     setComment("");
   };
-
-  // Fokus otomatis ke textarea saat dibuka
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, []);
 
   return (
     <div className="flex items-end gap-2 border-t border-gray-200 pt-3 mt-3">

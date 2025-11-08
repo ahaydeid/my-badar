@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function GuruLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-900">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-zinc-900">
       <main className="flex-1">{children}</main>
       <BottomNav />
     </div>

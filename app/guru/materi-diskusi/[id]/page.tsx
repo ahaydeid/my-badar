@@ -100,13 +100,13 @@ export default function ListMateriKelas() {
 
               <div className="flex justify-around text-gray-600 text-[13px] py-2">
                 <div className="flex items-center gap-1">
-                  <Eye className="w-4 h-4 text-violet-500" /> {materi.stats.lihat}
+                  <Eye className="w-4 h-4" /> {materi.stats.lihat}
                 </div>
                 <div className="flex items-center gap-1">
-                  <Pin className="w-4 h-4 text-violet-500" /> {materi.stats.pin}
+                  <Pin className="w-4 h-4" /> {materi.stats.pin}
                 </div>
                 <div className="flex items-center gap-1">
-                  <MessageSquare className="w-4 h-4 text-violet-500" /> {materi.stats.komentar}
+                  <MessageSquare className="w-4 h-4" /> {materi.stats.komentar}
                 </div>
               </div>
             </Link>

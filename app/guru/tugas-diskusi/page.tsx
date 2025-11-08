@@ -37,29 +37,33 @@ export default function TugasDanDiskusi() {
   ];
 
   return (
-    <section className="bg-white w-full rounded-2xl p-5">
+    <section className="bg-gray-50 w-full rounded-2xl p-6 pb-20 shadow-sm">
       {/* Judul Section */}
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold text-gray-800">Tugas &amp; Diskusi</h2>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 tracking-tight">Tugas &amp; Diskusi</h2>
       </div>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5">
         {data.map((kelas) => {
           const tugasBerjalanEntries = Object.entries(kelas.berjalan);
           const tugasAda = tugasBerjalanEntries.some(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0);
 
           return (
-            <Link key={kelas.nama} href={`/guru/tugas-diskusi/${kelas.id}`} className="border border-gray-200 bg-white rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition-shadow duration-200">
-              <div>
-                <h3 className="text-[15px] font-bold text-gray-900 mb-3">{kelas.nama}</h3>
+            <Link key={kelas.nama} href={`/guru/tugas-diskusi/${kelas.id}`} className="group border border-gray-200 bg-white rounded-sm flex flex-col justify-between hover:shadow-md hover:border-gray-300 transition-all duration-200">
+              {/* Header */}
+              <div className="py-2 text-white text-center rounded-t-sm bg-gray-900">
+                <span className="text-base font-bold tracking-tight">{kelas.nama}</span>
+              </div>
 
+              {/* Content */}
+              <div className="p-4 flex-1">
                 {/* Tugas Berjalan */}
                 <p className="text-[14px] font-semibold text-green-600 mb-2">Tugas berjalan</p>
 
                 {/* Jika ada tugas */}
                 {tugasAda ? (
-                  <div className="flex flex-col gap-2 mb-3">
+                  <div className="flex flex-col gap-2 mb-4">
                     {tugasBerjalanEntries
                       .filter(([, jumlah]) => jumlah !== "-" && Number(jumlah) > 0)
                       .map(([jenis, jumlah]) => (
@@ -71,7 +75,7 @@ export default function TugasDanDiskusi() {
                   </div>
                 ) : (
                   // Jika tidak ada tugas berjalan
-                  <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1 mb-3">
+                  <div className="flex justify-between items-center bg-gray-200 text-gray-700 text-[13px] rounded-md px-3 py-1 mb-4">
                     <span>Tidak ada tugas</span>
                   </div>
                 )}
