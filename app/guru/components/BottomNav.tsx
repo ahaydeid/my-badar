@@ -33,7 +33,7 @@ export default function BottomNav(): ReactElement | null {
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10">
       <div className="max-w-full mx-auto flex justify-between items-center h-15 px-4">
         {items.map((it) => {
-          const isActive = pathname === it.href || (it.href === "/guru" && pathname === "/guru") || pathname?.startsWith(`${it.href}/`);
+          const isActive = pathname === it.href || (pathname.startsWith(`${it.href}/`) && it.href !== "/guru");
 
           return (
             <Link key={it.id} href={it.href} className={`flex-1 flex flex-col items-center justify-center text-xs py-2 transition ${isActive ? "text-gray-900 font-semibold" : "text-gray-500 hover:text-gray-700"}`}>
