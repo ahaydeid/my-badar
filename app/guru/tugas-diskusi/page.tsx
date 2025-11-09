@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Folders } from "lucide-react";
 
 export default function TugasDanDiskusi() {
+  const router = useRouter();
   const data = [
     {
       id: "12-mplb-1",
@@ -42,7 +44,7 @@ export default function TugasDanDiskusi() {
       {/* Judul Section */}
       <div className="mb-6 sticky p-3 shadow top-0 bg-gray-50 z-10 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800 tracking-tight">Tugas &amp; Diskusi</h2>
-        <button className="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
+        <button onClick={() => router.push("/guru/tugas-diskusi/bank-tugas")} className="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
           <Folders className="w-4 h-4" />
           Bank Tugas
         </button>
