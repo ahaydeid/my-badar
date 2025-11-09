@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Megaphone } from "lucide-react";
+import { Folders } from "lucide-react";
 
 export default function TugasDanDiskusi() {
   const data = [
@@ -43,8 +43,8 @@ export default function TugasDanDiskusi() {
       <div className="mb-6 sticky p-3 shadow top-0 bg-gray-50 z-10 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800 tracking-tight">Tugas &amp; Diskusi</h2>
         <button className="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
-          <Megaphone className="w-4 h-4" />
-          Broadcast Tugas
+          <Folders className="w-4 h-4" />
+          Bank Tugas
         </button>
       </div>
 

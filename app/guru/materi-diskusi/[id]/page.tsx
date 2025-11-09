@@ -64,7 +64,7 @@ export default function ListMateriKelas() {
             onClick={() => setActiveTab("aktif")}
             className={`flex-1 py-2 text-center transition-all duration-200 ${activeTab === "aktif" ? "text-gray-800 border-b-2 border-gray-800 bg-white" : "text-gray-400 hover:text-gray-600"}`}
           >
-            Sedang aktif
+            Sedang berjalan
           </button>
           <button
             onClick={() => setActiveTab("selesai")}
@@ -76,7 +76,7 @@ export default function ListMateriKelas() {
       </div>
 
       {/* Konten */}
-      <div className="py-4 px-2 space-y-6 pb-20">
+      <div className="py-2 px-2 space-y-6 pb-20">
         {filteredMateri.length === 0 ? (
           <p className="text-center text-gray-500 text-sm py-10">Tidak ada materi {activeTab === "aktif" ? "aktif" : "selesai"}.</p>
         ) : (

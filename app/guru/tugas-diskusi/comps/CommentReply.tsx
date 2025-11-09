@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { User, X } from "lucide-react";
+import { ArrowBigUp, User, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface Comment {
@@ -87,9 +87,7 @@ export default function CommentReply({ comment, onClose }: CommentReplyProps) {
               {/* Tombol aksi */}
               <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
                 <button type="button" className="inline-flex items-center gap-1 border border-gray-400 px-2 py-0.5 rounded-lg hover:bg-sky-600 hover:text-white transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                    <path d="M12 19V6M5 12l7-7 7 7" />
-                  </svg>
+                  <ArrowBigUp className="w-4 h-4" />
                   <span className="font-medium text-gray-600">24</span>
                 </button>
 

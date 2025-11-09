@@ -34,8 +34,8 @@ export default function HeroSection() {
       <div className="flex justify-between items-center">
         {/* Left side - Greeting */}
         <div className="w-[40%]">
-          <h1 className="text-sm font-semibold text-white flex gap-2 drop-shadow-md">
-            {greeting} <span className="text-xl leading-none relative -top-1">{emoji}</span>
+          <h1 className="text-xs mt-4 font-semibold text-white flex gap-2 drop-shadow-md">
+            {greeting} <span className="text-xl leading-none relative -top-2">{emoji}</span>
           </h1>
 
           {/* Tanggal hari ini */}
@@ -53,7 +53,7 @@ export default function HeroSection() {
         {/* Right side - User info */}
         <div className="w-[60%] flex items-center justify-end gap-3">
           <div className="text-right">
-            <p className="text-base font-extrabold text-white leading-tight drop-shadow-md">Ahadi, S.Kom</p>
+            <p className="text-base font-extrabold text-white leading-tight drop-shadow-md">Ahadi</p>
             <p className="text-sm font-medium text-white/80 drop-shadow-md">Coding</p>
           </div>
           <div className="w-14 h-14 rounded-full bg-white/95 border border-gray-200 shadow-md flex items-center justify-center">

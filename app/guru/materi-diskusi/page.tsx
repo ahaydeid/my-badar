@@ -1,6 +1,6 @@
 "use client";
 
-import { Megaphone } from "lucide-react";
+import { Folders } from "lucide-react";
 import Link from "next/link";
 
 export default function MateriDanDiskusi() {
@@ -42,10 +42,12 @@ export default function MateriDanDiskusi() {
       {/* Judul Section */}
       <div className="mb-6 sticky p-3 shadow top-0 bg-gray-50 z-10 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800">Materi &amp; Diskusi</h2>
-        <button className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
-          <Megaphone className="w-4 h-4" />
-          Broadcast Materi
-        </button>
+        <Link href="/guru/materi-diskusi/bank-materi">
+          <button className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-sm transition">
+            <Folders className="w-4 h-4" />
+            Bank Materi
+          </button>
+        </Link>
       </div>
 
       {/* Grid Card */}
