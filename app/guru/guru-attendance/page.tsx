@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Camera, MapPin, Check, LogOut, Loader2 } from "lucide-react";
+import { MapPin, Check, LogOut, Loader2, List } from "lucide-react";
 
 const MapView = dynamic(() => import("./components/MapView"), { ssr: false });
 
@@ -13,7 +13,7 @@ export default function AbsenGuruPage() {
   const [waktuKeluar, setWaktuKeluar] = useState<string>("");
   const [isTerlambat, setIsTerlambat] = useState<boolean>(false);
   const [sudahMasuk, setSudahMasuk] = useState<boolean>(false);
-  const [isDetecting, setIsDetecting] = useState<boolean>(false); // 👈 tambahan untuk spinner
+  const [isDetecting, setIsDetecting] = useState<boolean>(false);
 
   // Jadwal dummy (2 kelas)
   const jadwalHariIni = [
@@ -60,10 +60,6 @@ export default function AbsenGuruPage() {
     );
   };
 
-  const handleOpenCamera = () => {
-    alert("Fitur kamera akan dibuka (dummy).");
-  };
-
   const handleAbsenMasuk = () => {
     const now = new Date();
     const waktuSekarang = now.toLocaleTimeString("id-ID", {
@@ -106,7 +102,15 @@ export default function AbsenGuruPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
       {/* Header */}
-      <h1 className="sticky top-0 z-20 bg-white text-center text-[20px] font-extrabold py-1 border-b border-gray-200 shadow-sm">Absen Guru</h1>
+      <div className="sticky top-0 z-20 bg-white flex items-center justify-between px-1 py-1 border-b border-gray-200 shadow-sm">
+        <h1 className="text-[20px] font-extrabold flex-1 pl-2">Absen Guru</h1>
+
+        {/* Tombol Hard-Code */}
+        <button className="text-sm font-semibold px-3 py-1 bg-gray-700 text-white rounded hover:bg-sky-700 transition flex items-center gap-2">
+          Log Saya
+          <List className="w-4 h-4" />
+        </button>
+      </div>
 
       {/* Jam Digital */}
       <div className="flex flex-col items-center justify-center py-1 bg-[#009BFF] text-white shadow-md">
@@ -144,14 +148,6 @@ export default function AbsenGuruPage() {
             <MapPin className="w-5 h-5" />
             {isDetecting ? "Mendeteksi..." : "Deteksi Lokasi"}
           </button>
-
-          {/* Tombol Kamera hanya muncul sebelum absen masuk */}
-          {!sudahMasuk && (
-            <button onClick={handleOpenCamera} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg border flex items-center justify-center gap-2 transition">
-              <Camera className="w-5 h-5" />
-              Kamera
-            </button>
-          )}
         </div>
 
         {/* --- Tombol Absen Masuk & Keluar --- */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, X, Info, RefreshCcw, PlusCircle } from "lucide-react";
+import { CheckCircle2, X, Info, PlusCircle, PencilIcon } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -16,15 +16,6 @@ export default function TodayPage() {
     range: "08:15 - 09:00",
     jp: "1 JP",
     prevNote: "Kemarin siswa kurang fokus di bagian looping. Bingung katanya",
-    detail: {
-      guru: "Ahadi Hadi",
-      ruangan: "Lab Komputer 1",
-      jumlahSiswa: 28,
-      durasi: "45 menit",
-      topik: "Algoritma Pemrograman Dasar",
-      deskripsi: "Fokus pada pengenalan struktur percabangan dan pengulangan menggunakan contoh kode sederhana di lingkungan pemrograman visual.",
-      subtopik: ["Mengenal konsep algoritma dan logika dasar.", "Memahami struktur percabangan (if/else).", "Menerapkan struktur perulangan (for dan while).", "Latihan membuat flowchart sederhana."],
-    },
   };
 
   const isOverdue = false;
@@ -65,28 +56,46 @@ export default function TodayPage() {
                 <div className="flex items-center gap-3 mb-2">
                   {/* Tombol Absen Ulang */}
                   <Link href="./attendance/" className="block w-[50%]">
-                    <span className="flex items-center justify-center gap-2 rounded-md py-3 shadow font-extrabold text-lg text-white transition bg-yellow-500 hover:bg-yellow-400">
-                      <RefreshCcw className="w-5 h-5 shrink-0" />
-                      Absen Ulang
+                    <span className="flex items-center justify-center gap-2 rounded-md py-3 px-1 shadow font-bold text-lg text-white transition bg-yellow-500 hover:bg-yellow-400">
+                      <PencilIcon className="w-5 h-5 shrink-0" />
+                      Edit Absen
                     </span>
                   </Link>
 
                   {/* Tombol Tambah Nilai Harian */}
                   <Link href="#" className="block w-[50%]">
-                    <span className="flex items-center justify-center gap-2 rounded-md py-3 shadow font-extrabold text-lg text-white transition bg-sky-500 hover:bg-sky-600">
+                    <span className="flex items-center justify-center gap-2 rounded-md py-3 px-1 shadow font-bold text-lg text-white transition bg-sky-500 hover:bg-sky-600">
                       <PlusCircle className="w-5 h-5 shrink-0" />
                       Tambah Nilai
                     </span>
                   </Link>
                 </div>
 
-                {/* Keterangan kehadiran */}
                 <div className="text-left text-gray-700 text-sm font-semibold mt-1 pl-1">
-                  <p>Hadir = {attendance.hadir}</p>
-                  <p>Sakit = {attendance.sakit}</p>
-                  <p>Izin = {attendance.izin}</p>
-                  <p>Alfa = {attendance.alfa}</p>
-                  <p className="text-gray-500 mt-1 font-normal">Dari total {attendance.total} siswa</p>
+                  {/* Grid Utama 2 kolom */}
+                  <div className="grid grid-cols-2 gap-x-5">
+                    {/* Kolom 1: Grid anak 2 kolom */}
+                    <div className="grid grid-cols-2 gap-y-1 gap-x-1 pr-6">
+                      <p className="py-0.5 text-gray-600 rounded text-center">
+                        H - <span className="text-white bg-green-600 border py-0.5 px-1 rounded-sm">{attendance.hadir}</span>
+                      </p>
+                      <p className="py-0.5 text-gray-600 rounded text-center">
+                        S - <span className="text-white bg-yellow-500 border py-0.5 px-1 rounded-sm">{attendance.sakit}</span>
+                      </p>
+                      <p className="py-0.5 text-gray-600 rounded text-center">
+                        I - <span className="text-white bg-sky-500 border py-0.5 px-1 rounded-sm">{attendance.izin}</span>
+                      </p>
+                      <p className="py-0.5 text-gray-600 rounded text-center">
+                        A - <span className="text-white bg-red-600 border py-0.5 px-1 rounded-sm">{attendance.alfa}</span>
+                      </p>
+                    </div>
+
+                    {/* Kolom 2: Kosong */}
+                    <div></div>
+                  </div>
+
+                  {/* Total siswa */}
+                  <p className="text-gray-500 mt-2 font-normal">Dari total {attendance.total} siswa</p>
                 </div>
               </div>
             ) : (
@@ -110,9 +119,9 @@ export default function TodayPage() {
           {/* ====== Section: Mapel + Detail ====== */}
           <section className="mt-5 border-t border-gray-200">
             <label className="block mt-3 text-gray-700 font-semibold mb-1">Materi hari ini</label>
-            <div className="flex items-center justify-between bg-gray-200  py-2 px-2">
-              <div className="font-bold text-lg text-black">{card.subject}</div>
-              <button onClick={() => setShowDetail(true)} className="text-sm bg-sky-500 hover:bg-sky-600 gap-1 flex items-center text-white font-semibold rounded-md px-3 py-1.5 shadow-sm">
+            <div className="flex items-center justify-between bg-gray-100 rounded py-2 px-2">
+              <div className="font-bold text-lg text-black">-</div>
+              <button onClick={() => setShowDetail(true)} className="text-sm bg-gray-100 hover:bg-gray-200 gap-1 flex items-center text-gray-560 border border-gray-400 rounded-md px-3 py-1.5">
                 <Info /> Detail
               </button>
             </div>
@@ -179,53 +188,31 @@ export default function TodayPage() {
 
           {/* Modal Box */}
           <div className="relative z-10 w-[90%] max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-7 animate-[fadeIn_0.2s_ease-out] overflow-y-auto max-h-[90vh]">
-            {/* Header */}
+            {/* Header (TIDAK DIUBAH) */}
             <div className="flex justify-between items-center border-b border-gray-200 pb-2 mb-4">
               <h3 className="text-xl font-bold text-gray-800">Panduan Ajar Hari Ini</h3>
             </div>
 
-            {/* Body */}
-            <div className="space-y-5 text-[15px] text-gray-700">
-              {/* Info Kelas */}
-              <div className="grid grid-cols-2 gap-y-1 text-sm">
-                <p>
-                  <span className="font-semibold">Guru:</span> {card.detail.guru}
-                </p>
-                <p>
-                  <span className="font-semibold">Ruangan:</span> {card.detail.ruangan}
-                </p>
-                <p>
-                  <span className="font-semibold">Jumlah Siswa:</span> {card.detail.jumlahSiswa}
-                </p>
-                <p>
-                  <span className="font-semibold">Durasi:</span> {card.detail.durasi}
-                </p>
+            {/* Body (INI YANG DIUBAH) */}
+            <div className="flex flex-col items-center text-center py-10 px-4 text-gray-700 space-y-5">
+              {/* Icon */}
+              <div className="w-24 h-24 rounded-full bg-sky-100 flex items-center justify-center shadow-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 text-sky-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L4.35 17c-.77 1.333.192 3 1.732 3z" />
+                </svg>
               </div>
 
-              {/* Topik */}
-              <div>
-                <h4 className="font-bold text-gray-800 text-base mb-1">Topik Pembelajaran:</h4>
-                <p className="text-gray-700 leading-relaxed">{card.detail.topik}</p>
-              </div>
+              {/* Title */}
+              <h2 className="text-xl font-bold text-gray-900">Fitur Lagi dibuat</h2>
 
-              {/* Deskripsi */}
-              <div>
-                <h4 className="font-bold text-gray-800 text-base mb-1">Deskripsi Materi:</h4>
-                <p className="leading-relaxed">{card.detail.deskripsi}</p>
-              </div>
+              {/* Description */}
+              <p className="text-[15px] text-gray-600 leading-relaxed max-w-sm">Halaman Panduan Ajar Hari Ini belum tersedia. Lagi dibuat, sabar yaww 😘</p>
 
-              {/* Subtopik / Panduan Langkah */}
-              <div>
-                <h4 className="font-bold text-gray-800 text-base mb-2">Langkah Pembelajaran:</h4>
-                <ul className="list-disc list-inside space-y-1 pl-2">
-                  {card.detail.subtopik.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+              {/* Divider */}
+              <div className="w-28 h-0.5 bg-gray-200 rounded-full mt-2"></div>
             </div>
 
-            {/* Footer */}
+            {/* Footer (TIDAK DIUBAH) */}
             <div className="flex justify-end mt-6 pt-3 border-t border-gray-200">
               <button onClick={() => setShowDetail(false)} className="px-5 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-sm flex items-center font-semibold shadow-sm transition-all active:scale-[0.98]">
                 <X />
