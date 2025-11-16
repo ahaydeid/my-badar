@@ -53,7 +53,7 @@ export default function JadwalHariCard({ day, list }: Props) {
 
                       {/* Hitung JP */}
                       <div className="text-xs text-gray-600 mt-2">
-                        <span className="px-3 py-1 rounded-full bg-gray-700 text-white">{hasPertama && hasKedua ? "2 JP" : hasPertama ? "1 JP" : "0 JP"}</span>
+                        <span className="px-3 py-1 rounded-full bg-gray-100 border border-gray-300">{hasPertama && hasKedua ? "2 JP" : hasPertama ? "1 JP" : "0 JP"}</span>
                       </div>
 
                       <div className="text-xs text-gray-600 mt-2">
