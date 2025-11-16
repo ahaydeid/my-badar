@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import JadwalHariCard from "./comps/JadwalHariCard";
 
 type DayRow = { id: number; nama: string };
-type RelOneOrMany<T> = T | T[] | null;
 
 type RawJadwal = {
   id: number;
@@ -13,12 +12,13 @@ type RawJadwal = {
   kelas_id?: number | null;
   jp?: number | null;
   guru_id?: number | null;
-  kelas?: RelOneOrMany<{ nama?: string }>;
-  jam?: RelOneOrMany<{ nama?: string; mulai?: string; selesai?: string }>;
-  jumlah_jam?: RelOneOrMany<{ nama?: string }>;
+  kelas?: { nama?: string } | null;
+  jamPertama?: string | null;
+  jamKedua?: string | null;
+  jamMulai?: string | null;
+  jamSelesai?: string | null;
 };
 
-// === Fungsi bantu konversi waktu (untuk sorting) ===
 const toMinutes = (time: string | null): number => {
   if (!time) return 9999;
   const [h = "0", m = "0"] = time.split(":");
@@ -31,11 +31,10 @@ export default function Page(): React.ReactElement {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // === Simulasi ambil data dummy ===
   useEffect(() => {
     let mounted = true;
 
-    const loadDummy = (): void => {
+    const loadDummy = () => {
       setLoading(true);
       setError(null);
 
@@ -57,50 +56,55 @@ export default function Page(): React.ReactElement {
             hari_id: 1,
             guru_id: 1,
             kelas_id: 2,
-            jam_id: 1,
             kelas: { nama: "X TKJ 1" },
-            jam: { nama: "Jam ke-1", mulai: "07:00:00", selesai: "07:45:00" },
-            jumlah_jam: { nama: "1 JP" },
+            jamPertama: "J-1",
+            jamKedua: "J-2",
+            jamMulai: "07:00:00",
+            jamSelesai: "07:45:00",
           },
           {
             id: 2,
             hari_id: 1,
             guru_id: 1,
             kelas_id: 2,
-            jam_id: 2,
             kelas: { nama: "X TKJ 1" },
-            jam: { nama: "Jam ke-2", mulai: "07:45:00", selesai: "08:30:00" },
-            jumlah_jam: { nama: "1 JP" },
+            jamPertama: "J-2",
+            jamKedua: "J-3",
+            jamMulai: "07:45:00",
+            jamSelesai: "08:30:00",
           },
           {
             id: 3,
             hari_id: 2,
             guru_id: 1,
             kelas_id: 3,
-            jam_id: 3,
             kelas: { nama: "XI RPL 2" },
-            jam: { nama: "Jam ke-3", mulai: "09:00:00", selesai: "09:45:00" },
-            jumlah_jam: { nama: "1 JP" },
+            jamPertama: "J-3",
+            jamKedua: "J-4",
+            jamMulai: "09:00:00",
+            jamSelesai: "09:45:00",
           },
           {
             id: 4,
-            hari_id: 3,
+            hari_id: 2,
             guru_id: 1,
-            kelas_id: 4,
-            jam_id: 4,
-            kelas: { nama: "XII TKJ 2" },
-            jam: { nama: "Jam ke-4", mulai: "10:00:00", selesai: "10:45:00" },
-            jumlah_jam: { nama: "1 JP" },
+            kelas_id: 3,
+            kelas: { nama: "XI RPL 2" },
+            jamPertama: "J-4",
+            jamKedua: "J-5",
+            jamMulai: "10:00:00",
+            jamSelesai: "10:45:00",
           },
           {
             id: 5,
-            hari_id: 4,
+            hari_id: 3,
             guru_id: 1,
             kelas_id: 4,
-            jam_id: 4,
-            kelas: { nama: "XII TKJ 4" },
-            jam: { nama: "Jam ke-4", mulai: "10:00:00", selesai: "10:45:00" },
-            jumlah_jam: { nama: "1 JP" },
+            kelas: { nama: "XII TKJ 2" },
+            jamPertama: "J-5",
+            jamKedua: "J-6",
+            jamMulai: "11:00:00",
+            jamSelesai: "11:45:00",
           },
         ];
 
@@ -108,9 +112,9 @@ export default function Page(): React.ReactElement {
         setJadwals(dummyJadwal);
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
-        if (mounted) setError(msg);
+        setError(msg);
       } finally {
-        if (mounted) setLoading(false);
+        setLoading(false);
       }
     };
 
@@ -121,7 +125,6 @@ export default function Page(): React.ReactElement {
     };
   }, []);
 
-  // === Mapping jadwal per hari dan sorting ===
   const jadwalMap = useMemo(() => {
     const map = new Map<number, RawJadwal[]>();
 
@@ -132,27 +135,17 @@ export default function Page(): React.ReactElement {
     });
 
     map.forEach((list) => {
-      list.sort((a, b) => {
-        const mulaiA = Array.isArray(a.jam) ? a.jam[0]?.mulai ?? null : a.jam?.mulai ?? null;
-        const mulaiB = Array.isArray(b.jam) ? b.jam[0]?.mulai ?? null : b.jam?.mulai ?? null;
-        return toMinutes(mulaiA) - toMinutes(mulaiB);
-      });
+      list.sort((a, b) => toMinutes(a.jamMulai ?? null) - toMinutes(b.jamMulai ?? null));
     });
 
     return map;
   }, [jadwals]);
 
-  // === Normalize sebelum dikirim ke Card ===
-  const normalizeRel = <T,>(rel: RelOneOrMany<T>): T | null => {
-    if (!rel) return null;
-    return Array.isArray(rel) ? rel[0] ?? null : rel;
-  };
-
   return (
     <div className="min-h-screen bg-[#f5f5f5] pb-28">
-        <h1 className="sticky top-0 z-20 bg-gray-50 text-center text-2xl md:text-[20px] font-extrabold py-3 mb-4 border-b border-gray-200">Jadwal Mengajar</h1>
-      <div className="mx-auto w-full px-4 max-w-xl md:max-w-2xl lg:max-w-3xl">
+      <h1 className="sticky top-0 z-20 bg-gray-50 text-center text-2xl font-extrabold py-3 mb-4 border-b border-gray-200">Jadwal Mengajar</h1>
 
+      <div className="mx-auto w-full px-4 max-w-xl md:max-w-2xl lg:max-w-3xl">
         {loading ? (
           <div className="text-center text-gray-500">Memuat jadwal dummy...</div>
         ) : error ? (
@@ -160,20 +153,11 @@ export default function Page(): React.ReactElement {
         ) : (
           <div className="space-y-2">
             {days.map((day) => {
-              const list = (jadwalMap.get(day.id) ?? []).map((j) => ({
-                ...j,
-                kelas: normalizeRel(j.kelas),
-                jam: normalizeRel(j.jam),
-                jumlah_jam: normalizeRel(j.jumlah_jam),
-              }));
+              const list = jadwalMap.get(day.id) ?? [];
               return <JadwalHariCard key={day.id} day={day} list={list} />;
             })}
           </div>
         )}
-
-        {days.length > 0 && jadwalMap.size === 0 && <div className="text-center text-white mt-8 p-4 bg-red-600 rounded-lg">Tidak ada jadwal dummy untuk ditampilkan.</div>}
-
-        <div className="h-8" />
       </div>
     </div>
   );
