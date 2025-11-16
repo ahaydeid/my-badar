@@ -51,6 +51,9 @@ export default function Page(): React.ReactElement {
         ];
 
         const dummyJadwal: RawJadwal[] = [
+          // =========================
+          // SENIN
+          // =========================
           {
             id: 1,
             hari_id: 1,
@@ -69,10 +72,14 @@ export default function Page(): React.ReactElement {
             kelas_id: 2,
             kelas: { nama: "X TKJ 1" },
             jamPertama: "J-2",
-            jamKedua: "J-3",
+            jamKedua: null, // 1 JP
             jamMulai: "07:45:00",
             jamSelesai: "08:30:00",
           },
+
+          // =========================
+          // SELASA
+          // =========================
           {
             id: 3,
             hari_id: 2,
@@ -97,14 +104,81 @@ export default function Page(): React.ReactElement {
           },
           {
             id: 5,
+            hari_id: 2,
+            guru_id: 1,
+            kelas_id: 3,
+            kelas: { nama: "XI RPL 2" },
+            jamPertama: "J-5",
+            jamKedua: null, // 1 JP
+            jamMulai: "11:00:00",
+            jamSelesai: "11:45:00",
+          },
+
+          // =========================
+          // RABU
+          // =========================
+          {
+            id: 6,
             hari_id: 3,
             guru_id: 1,
             kelas_id: 4,
             kelas: { nama: "XII TKJ 2" },
-            jamPertama: "J-5",
-            jamKedua: "J-6",
-            jamMulai: "11:00:00",
-            jamSelesai: "11:45:00",
+            jamPertama: "J-1",
+            jamKedua: "J-2",
+            jamMulai: "07:00:00",
+            jamSelesai: "07:45:00",
+          },
+
+          // =========================
+          // KAMIS
+          // =========================
+          {
+            id: 8,
+            hari_id: 4,
+            guru_id: 1,
+            kelas_id: 5,
+            kelas: { nama: "XII TKJ 4" },
+            jamPertama: "J-1",
+            jamKedua: null, // 1 JP
+            jamMulai: "07:00:00",
+            jamSelesai: "07:45:00",
+          },
+          {
+            id: 9,
+            hari_id: 4,
+            guru_id: 1,
+            kelas_id: 5,
+            kelas: { nama: "XII TKJ 4" },
+            jamPertama: "J-2",
+            jamKedua: "J-3",
+            jamMulai: "07:45:00",
+            jamSelesai: "08:30:00",
+          },
+
+          // =========================
+          // JUMAT
+          // =========================
+          {
+            id: 10,
+            hari_id: 5,
+            guru_id: 1,
+            kelas_id: 6,
+            kelas: { nama: "XII RPL 1" },
+            jamPertama: "J-1",
+            jamKedua: "J-2",
+            jamMulai: "07:00:00",
+            jamSelesai: "07:45:00",
+          },
+          {
+            id: 11,
+            hari_id: 5,
+            guru_id: 1,
+            kelas_id: 6,
+            kelas: { nama: "XII RPL 1" },
+            jamPertama: "J-2",
+            jamKedua: null, // 1 JP
+            jamMulai: "07:45:00",
+            jamSelesai: "08:30:00",
           },
         ];
 
