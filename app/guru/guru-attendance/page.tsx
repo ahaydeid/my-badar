@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { MapPin, Check, LogOut, Loader2, List } from "lucide-react";
+import SuccessModal from "./components/SuccessModal";
 
 const MapView = dynamic(() => import("./components/MapView"), { ssr: false });
 
@@ -14,6 +15,8 @@ export default function AbsenGuruPage() {
   const [isTerlambat, setIsTerlambat] = useState<boolean>(false);
   const [sudahMasuk, setSudahMasuk] = useState<boolean>(false);
   const [isDetecting, setIsDetecting] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   // ⬇⬇⬇ TAMBAHAN: LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,7 +97,9 @@ export default function AbsenGuruPage() {
       return;
     }
 
-    alert("Absen masuk berhasil!");
+    // ⬇⬇⬇ GANTI ALERT → MODAL
+    setModalMessage("Absen Masuk Berhasil");
+    setModalOpen(true);
   };
 
   // API KELUAR
@@ -119,7 +124,9 @@ export default function AbsenGuruPage() {
       return;
     }
 
-    alert("Absen keluar tersimpan!");
+    // ⬇⬇⬇ GANTI ALERT → MODAL
+    setModalMessage("Absen Pulang Berhasil");
+    setModalOpen(true);
   };
 
   // ABSEN MASUK
@@ -148,13 +155,7 @@ export default function AbsenGuruPage() {
     submitAbsenKeluar();
   };
 
-  const bolehKeluar = (() => {
-    const [jamAkhir, menitAkhir] = jamSelesaiTerakhir.split(":").map(Number);
-    const now = new Date();
-    const jamNow = now.getHours();
-    const menitNow = now.getMinutes();
-    return jamNow > jamAkhir || (jamNow === jamAkhir && menitNow >= menitAkhir);
-  })();
+  const bolehKeluar = sudahMasuk;
 
   // ⬇⬇⬇ TAMBAHAN: SPINNER OVERLAY
   if (loading) {
@@ -166,102 +167,107 @@ export default function AbsenGuruPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-white flex items-center justify-between px-1 py-1 border-b border-gray-200 shadow-sm">
-        <h1 className="text-[20px] font-extrabold flex-1 pl-2">Absen Guru</h1>
-        <button className="text-sm font-semibold px-3 py-1 bg-gray-700 text-white rounded hover:bg-sky-700 transition flex items-center gap-2">
-          Log Saya <List className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* JAM */}
-      <div className="flex flex-col items-center justify-center py-1 bg-[#009BFF] text-white shadow-md">
-        <div className="text-[48px] md:text-[56px] font-mono font-extrabold tracking-widest drop-shadow-sm">{currentTime}</div>
-        <p className="text-sm opacity-90">waktu saat ini</p>
-      </div>
-
-      {/* PETA */}
-      <div className="max-w-md mx-auto mt-4 px-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
-          <div className="h-[280px] relative flex items-center justify-center">
-            {isDetecting ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
-                <Loader2 className="w-8 h-8 mb-2 animate-spin text-sky-600" />
-                <p>Mendeteksi lokasi...</p>
-              </div>
-            ) : position ? (
-              <MapView lat={position[0]} lng={position[1]} />
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
-                <p>Deteksi lokasi untuk mendapat titik koordinat</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* DETEKSI */}
-        <div className="flex gap-2 mt-3">
-          <button
-            onClick={handleDetectLocation}
-            disabled={isDetecting}
-            className={`flex-1 font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition ${isDetecting ? "bg-sky-300 cursor-not-allowed text-white" : "bg-[#009BFF] hover:bg-sky-600 text-white"}`}
-          >
-            <MapPin className="w-5 h-5" />
-            {isDetecting ? "Mendeteksi..." : "Deteksi Lokasi"}
+    <>
+      <div className="min-h-screen bg-gray-50 pb-16">
+        {/* HEADER */}
+        <div className="sticky top-0 z-20 bg-white flex items-center justify-between px-1 py-1 border-b border-gray-200 shadow-sm">
+          <h1 className="text-[20px] font-extrabold flex-1 pl-2">Absen Guru</h1>
+          <button className="text-sm font-semibold px-3 py-1 bg-gray-700 text-white rounded hover:bg-sky-700 transition flex items-center gap-2">
+            Log Saya <List className="w-4 h-4" />
           </button>
         </div>
 
-        {/* MASUK & KELUAR */}
-        <div className="mt-5 flex gap-2">
-          {/* MASUK */}
-          <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
-            <div className="flex justify-between items-center px-4 py-3">
-              <div className="text-center flex-1">
-                <p className="text-[18px] font-bold text-gray-800">{jamMulaiPertama}</p>
-                <p className="text-[12px] text-gray-500">Mulai</p>
-              </div>
-              <div className="w-px h-8 bg-gray-300" />
-              <div className="text-center flex-1">
-                <p className="text-[18px] font-bold text-gray-800">{waktuMasuk || "--:--"}</p>
-                <p className="text-[12px] text-gray-500">Masuk</p>
-              </div>
-            </div>
+        {/* JAM */}
+        <div className="flex flex-col items-center justify-center py-1 bg-[#009BFF] text-white shadow-md">
+          <div className="text-[48px] md:text-[56px] font-mono font-extrabold tracking-widest drop-shadow-sm">{currentTime}</div>
+          <p className="text-sm opacity-90">waktu saat ini</p>
+        </div>
 
+        {/* PETA */}
+        <div className="max-w-md mx-auto mt-4 px-2">
+          <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
+            <div className="h-[280px] relative flex items-center justify-center">
+              {isDetecting ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
+                  <Loader2 className="w-8 h-8 mb-2 animate-spin text-sky-600" />
+                  <p>Mendeteksi lokasi...</p>
+                </div>
+              ) : position ? (
+                <MapView lat={position[0]} lng={position[1]} />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 text-sm">
+                  <p>Deteksi lokasi untuk mendapat titik koordinat</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* DETEKSI */}
+          <div className="flex gap-2 mt-3">
             <button
-              onClick={handleAbsenMasuk}
-              disabled={sudahMasuk || !position}
-              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${sudahMasuk ? (isTerlambat ? "bg-red-600" : "bg-green-500") : "bg-gray-700"}`}
+              onClick={handleDetectLocation}
+              disabled={isDetecting}
+              className={`flex-1 font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition ${isDetecting ? "bg-sky-300 cursor-not-allowed text-white" : "bg-[#009BFF] hover:bg-sky-600 text-white"}`}
             >
-              {sudahMasuk ? isTerlambat ? "Terlambat!" : <Check className="w-7 h-7 text-white" /> : "Masuk"}
+              <MapPin className="w-5 h-5" />
+              {isDetecting ? "Mendeteksi..." : "Deteksi Lokasi"}
             </button>
           </div>
 
-          {/* KELUAR */}
-          <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
-            <div className="flex justify-between items-center px-4 py-3">
-              <div className="text-center flex-1">
-                <p className="text-[18px] font-bold text-gray-800">{jamSelesaiTerakhir}</p>
-                <p className="text-[12px] text-gray-500">Selesai</p>
+          {/* MASUK & KELUAR */}
+          <div className="mt-5 flex gap-2">
+            {/* MASUK */}
+            <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
+              <div className="flex justify-between items-center px-4 py-3">
+                <div className="text-center flex-1">
+                  <p className="text-[18px] font-bold text-gray-800">{jamMulaiPertama}</p>
+                  <p className="text-[12px] text-gray-500">Mulai</p>
+                </div>
+                <div className="w-px h-8 bg-gray-300" />
+                <div className="text-center flex-1">
+                  <p className="text-[18px] font-bold text-gray-800">{waktuMasuk || "--:--"}</p>
+                  <p className="text-[12px] text-gray-500">Masuk</p>
+                </div>
               </div>
-              <div className="w-px h-8 bg-gray-300" />
-              <div className="text-center flex-1">
-                <p className="text-[18px] font-bold text-gray-800">{waktuKeluar || "--:--"}</p>
-                <p className="text-[12px] text-gray-500">Keluar</p>
-              </div>
+
+              <button
+                onClick={handleAbsenMasuk}
+                disabled={sudahMasuk || !position}
+                className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${sudahMasuk ? (isTerlambat ? "bg-red-600" : "bg-green-500") : "bg-gray-700"}`}
+              >
+                {sudahMasuk ? isTerlambat ? "Terlambat!" : <Check className="w-7 h-7 text-white" /> : "Masuk"}
+              </button>
             </div>
 
-            <button
-              onClick={handleAbsenKeluar}
-              disabled={!sudahMasuk || !bolehKeluar}
-              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${!sudahMasuk || !bolehKeluar ? "bg-gray-700 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
-            >
-              <LogOut className="w-5 h-5" />
-              Keluar
-            </button>
+            {/* KELUAR */}
+            <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
+              <div className="flex justify-between items-center px-4 py-3">
+                <div className="text-center flex-1">
+                  <p className="text-[18px] font-bold text-gray-800">{jamSelesaiTerakhir}</p>
+                  <p className="text-[12px] text-gray-500">Selesai</p>
+                </div>
+                <div className="w-px h-8 bg-gray-300" />
+                <div className="text-center flex-1">
+                  <p className="text-[18px] font-bold text-gray-800">{waktuKeluar || "--:--"}</p>
+                  <p className="text-[12px] text-gray-500">Keluar</p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleAbsenKeluar}
+                disabled={!sudahMasuk || !bolehKeluar}
+                className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${!sudahMasuk || !bolehKeluar ? "bg-gray-700 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+              >
+                <LogOut className="w-5 h-5" />
+                Keluar
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* MODAL SUCCESS */}
+      <SuccessModal open={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
+    </>
   );
 }
