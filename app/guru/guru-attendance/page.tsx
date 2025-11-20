@@ -63,7 +63,7 @@ export default function AbsenGuruPage() {
   };
 
   // API MASUK
-  const submitAbsenMasuk = async () => {
+  const submitAbsenMasuk = async (jam: string) => {
     if (!position) {
       alert("Silakan deteksi lokasi terlebih dahulu.");
       return;
@@ -76,7 +76,7 @@ export default function AbsenGuruPage() {
         guru_id: GURU_ID,
         lat: position[0],
         lng: position[1],
-        jam_masuk: waktuMasuk,
+        jam_masuk: jam, // ← langsung kirim nilai yang valid
       }),
     });
 
@@ -116,8 +116,10 @@ export default function AbsenGuruPage() {
       hour: "2-digit",
       minute: "2-digit",
     });
+
     setWaktuMasuk(waktuSekarang);
 
+    // cek terlambat
     const [jamMulai, menitMulai] = jamMulaiPertama.split(":").map(Number);
     const jamSekarang = now.getHours();
     const menitSekarang = now.getMinutes();
@@ -126,7 +128,8 @@ export default function AbsenGuruPage() {
 
     setSudahMasuk(true);
 
-    submitAbsenMasuk(); // SUDAH INTEGRASI API !!!
+    // 👇 KIRIM NILAI LANGSUNG
+    submitAbsenMasuk(waktuSekarang);
   };
 
   // ABSEN KELUAR
@@ -238,7 +241,7 @@ export default function AbsenGuruPage() {
             <button
               onClick={handleAbsenKeluar}
               disabled={!sudahMasuk || !bolehKeluar}
-              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${!sudahMasuk || !bolehKeluar ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${!sudahMasuk || !bolehKeluar ? "bg-gray-700 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
             >
               <LogOut className="w-5 h-5" />
               Keluar
