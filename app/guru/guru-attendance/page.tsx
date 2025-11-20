@@ -215,9 +215,9 @@ export default function AbsenGuruPage() {
             <button
               onClick={handleAbsenMasuk}
               disabled={sudahMasuk || !position}
-              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${sudahMasuk ? (isTerlambat ? "bg-red-600" : "bg-green-500") : "bg-green-500 hover:bg-green-700"}`}
+              className={`w-full py-2 rounded-b-xl text-white text-lg font-semibold transition flex items-center justify-center gap-2 ${sudahMasuk ? (isTerlambat ? "bg-red-600" : "bg-green-500") : "bg-gray-700"}`}
             >
-              {sudahMasuk ? isTerlambat ? "Terlambat!" : <Check className="w-6 h-6 text-white" /> : "Masuk"}
+              {sudahMasuk ? isTerlambat ? "Terlambat!" : <Check className="w-7 h-7 text-white" /> : "Masuk"}
             </button>
           </div>
 
