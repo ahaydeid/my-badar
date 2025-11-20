@@ -15,7 +15,10 @@ export default function AbsenGuruPage() {
   const [sudahMasuk, setSudahMasuk] = useState<boolean>(false);
   const [isDetecting, setIsDetecting] = useState<boolean>(false);
 
-  const GURU_ID = 2; // sementara hardcode, nanti bisa ganti dari login
+  // ⬇⬇⬇ TAMBAHAN: LOADING STATE
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const GURU_ID = 2;
 
   const jadwalHariIni = [
     { id: 1, kelas: "12 MPLB 1", mulai: "07:30", selesai: "09:00" },
@@ -69,6 +72,8 @@ export default function AbsenGuruPage() {
       return;
     }
 
+    setLoading(true); // ⬅ START LOADING
+
     const res = await fetch("https://mybadar-panel.vercel.app/api/absensi/masuk", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,11 +81,14 @@ export default function AbsenGuruPage() {
         guru_id: GURU_ID,
         lat: position[0],
         lng: position[1],
-        jam_masuk: jam, // ← langsung kirim nilai yang valid
+        jam_masuk: jam,
       }),
     });
 
     const data = await res.json();
+
+    setLoading(false); // ⬅ STOP LOADING
+
     if (!res.ok) {
       alert("Gagal absen masuk: " + data.error);
       return;
@@ -91,6 +99,8 @@ export default function AbsenGuruPage() {
 
   // API KELUAR
   const submitAbsenKeluar = async () => {
+    setLoading(true); // ⬅ START LOADING
+
     const res = await fetch("https://mybadar-panel.vercel.app/api/absensi/keluar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,6 +111,9 @@ export default function AbsenGuruPage() {
     });
 
     const data = await res.json();
+
+    setLoading(false); // ⬅ STOP LOADING
+
     if (!res.ok) {
       alert("Gagal absen keluar: " + data.error);
       return;
@@ -109,39 +122,30 @@ export default function AbsenGuruPage() {
     alert("Absen keluar tersimpan!");
   };
 
-  // ABSEN MASUK (UI)
+  // ABSEN MASUK
   const handleAbsenMasuk = () => {
     const now = new Date();
-    const waktuSekarang = now.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const waktuSekarang = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
 
     setWaktuMasuk(waktuSekarang);
 
-    // cek terlambat
     const [jamMulai, menitMulai] = jamMulaiPertama.split(":").map(Number);
     const jamSekarang = now.getHours();
     const menitSekarang = now.getMinutes();
 
     setIsTerlambat(jamSekarang > jamMulai || (jamSekarang === jamMulai && menitSekarang > menitMulai));
-
     setSudahMasuk(true);
 
-    // 👇 KIRIM NILAI LANGSUNG
     submitAbsenMasuk(waktuSekarang);
   };
 
   // ABSEN KELUAR
   const handleAbsenKeluar = () => {
     const now = new Date();
-    const waktuSekarang = now.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    setWaktuKeluar(waktuSekarang);
+    const waktuSekarang = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
 
-    submitAbsenKeluar(); // SUDAH INTEGRASI API !!!
+    setWaktuKeluar(waktuSekarang);
+    submitAbsenKeluar();
   };
 
   const bolehKeluar = (() => {
@@ -151,6 +155,15 @@ export default function AbsenGuruPage() {
     const menitNow = now.getMinutes();
     return jamNow > jamAkhir || (jamNow === jamAkhir && menitNow >= menitAkhir);
   })();
+
+  // ⬇⬇⬇ TAMBAHAN: SPINNER OVERLAY
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+        <Loader2 className="w-16 h-16 text-white animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
