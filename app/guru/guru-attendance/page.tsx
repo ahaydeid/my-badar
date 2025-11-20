@@ -21,7 +21,7 @@ export default function AbsenGuruPage() {
   // ⬇⬇⬇ TAMBAHAN: LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
-  const GURU_ID = 2;
+  const GURU_ID = 1;
 
   const jadwalHariIni = [
     { id: 1, kelas: "12 MPLB 1", mulai: "07:30", selesai: "09:00" },
