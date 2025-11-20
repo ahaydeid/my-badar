@@ -13,11 +13,11 @@ export default function SuccessModal({ open, message, onClose }: SuccessModalPro
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white rounded-xl p-6 w-[85%] max-w-xs text-center shadow-lg animate-fadeIn" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white rounded p-6 w-[85%] max-w-xs text-center shadow-lg animate-fadeIn" onClick={(e) => e.stopPropagation()}>
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-3" />
-        <h2 className="text-lg font-bold mb-1">{message}</h2>
+        <h2 className="text-lg mb-1">{message}</h2>
 
-        <button onClick={onClose} className="mt-3 bg-green-600 text-white px-4 py-2 rounded-lg w-full font-semibold">
+        <button onClick={onClose} className="mt-3 bg-green-600 text-white px-4 py-2 rounded-sm w-full font-semibold">
           OK
         </button>
       </div>
