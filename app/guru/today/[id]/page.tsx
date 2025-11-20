@@ -121,7 +121,7 @@ export default function TodayPage() {
             <label className="block mt-3 text-gray-700 font-semibold mb-1">Materi hari ini</label>
             <div className="flex items-center justify-between bg-gray-100 rounded py-2 px-2">
               <div className="font-bold text-lg text-black">-</div>
-              <button onClick={() => setShowDetail(true)} className="text-sm bg-gray-100 hover:bg-gray-200 gap-1 flex items-center text-gray-560 border border-gray-400 rounded-md px-3 py-1.5">
+              <button onClick={() => setShowDetail(true)} className="text-sm bg-gray-50 hover:bg-gray-200 gap-1 flex items-center text-gray-560 border border-gray-400 rounded-md px-3 py-1.5">
                 <Info /> Detail
               </button>
             </div>
@@ -169,10 +169,10 @@ export default function TodayPage() {
           <div className="relative z-10 w-[90%] max-w-md bg-white rounded-xl p-6 shadow-lg">
             <h3 className="text-lg text-center font-bold mb-4">Selesaikan kelas?</h3>
             <div className="flex justify-center gap-3">
-              <button onClick={() => setShowConfirm(false)} className="px-4 py-2 rounded-md border border-red-600 bg-red-500 text-white hover:bg-gray-50 text-sm">
+              <button onClick={() => setShowConfirm(false)} className="px-4 py-2 rounded-md border border-red-600 bg-red-500 text-white hover:bg-red-600 text-sm">
                 Batal
               </button>
-              <button onClick={() => setShowConfirm(false)} className="px-4 py-2 rounded-md bg-green-600 text-white text-sm font-semibold">
+              <button onClick={() => setShowConfirm(false)} className="px-4 py-2 rounded-md bg-green-500 hover:bg-green-600 text-white text-sm font-semibold">
                 Selesaikan
               </button>
             </div>
@@ -196,8 +196,8 @@ export default function TodayPage() {
             {/* Body (INI YANG DIUBAH) */}
             <div className="flex flex-col items-center text-center py-10 px-4 text-gray-700 space-y-5">
               {/* Icon */}
-              <div className="w-24 h-24 rounded-full bg-sky-100 flex items-center justify-center shadow-inner">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 text-sky-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+              <div className="w-24 h-24 rounded-full bg-yellow-100 flex items-center justify-center shadow-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 text-yellow-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L4.35 17c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>

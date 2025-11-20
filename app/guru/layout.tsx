@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import BottomNav from "./components/BottomNav";
 
 export const metadata = {
-  title: "Guru | Sistem Absensi",
+  title: "My Badar - Mobile",
 };
 
 export default function GuruLayout({ children }: { children: ReactNode }) {

@@ -18,7 +18,7 @@ export default function LoginPage() {
             {/* Teks di kanan logo */}
             <div className="leading-tight text-center sm:text-left">
               <div className="text-xl font-extrabold text-sky-600">My Badar</div>
-              <div className="text-lg font-semibold text-gray-900">SMK Al Badar Dangdeur</div>
+              <div className="text-lg font-semibold text-gray-900">SMKS Al Badar Dangdeur</div>
             </div>
           </div>
         </header>

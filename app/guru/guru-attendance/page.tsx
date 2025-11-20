@@ -15,7 +15,8 @@ export default function AbsenGuruPage() {
   const [sudahMasuk, setSudahMasuk] = useState<boolean>(false);
   const [isDetecting, setIsDetecting] = useState<boolean>(false);
 
-  // Jadwal dummy (2 kelas)
+  const GURU_ID = 2; // sementara hardcode, nanti bisa ganti dari login
+
   const jadwalHariIni = [
     { id: 1, kelas: "12 MPLB 1", mulai: "07:30", selesai: "09:00" },
     { id: 2, kelas: "11 AKL 2", mulai: "09:15", selesai: "11:15" },
@@ -24,7 +25,7 @@ export default function AbsenGuruPage() {
   const jamMulaiPertama = jadwalHariIni[0].mulai;
   const jamSelesaiTerakhir = jadwalHariIni[jadwalHariIni.length - 1].selesai;
 
-  // Waktu realtime
+  // JAM DIGITAL
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -40,8 +41,9 @@ export default function AbsenGuruPage() {
     return () => clearInterval(interval);
   }, []);
 
+  // DETEKSI LOKASI
   const handleDetectLocation = (): void => {
-    setIsDetecting(true); // mulai deteksi
+    setIsDetecting(true);
     if (!navigator.geolocation) {
       alert("Browser tidak mendukung geolokasi.");
       setIsDetecting(false);
@@ -50,7 +52,7 @@ export default function AbsenGuruPage() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setPosition([pos.coords.latitude, pos.coords.longitude]);
-        setIsDetecting(false); // selesai deteksi
+        setIsDetecting(false);
       },
       () => {
         alert("Gagal mendeteksi lokasi.");
@@ -60,6 +62,54 @@ export default function AbsenGuruPage() {
     );
   };
 
+  // API MASUK
+  const submitAbsenMasuk = async () => {
+    if (!position) {
+      alert("Silakan deteksi lokasi terlebih dahulu.");
+      return;
+    }
+
+    const res = await fetch("https://mybadar-panel.vercel.app/api/absensi/masuk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        guru_id: GURU_ID,
+        lat: position[0],
+        lng: position[1],
+        jam_masuk: waktuMasuk,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert("Gagal absen masuk: " + data.error);
+      return;
+    }
+
+    alert("Absen masuk berhasil!");
+  };
+
+  // API KELUAR
+  const submitAbsenKeluar = async () => {
+    const res = await fetch("https://mybadar-panel.vercel.app/api/absensi/keluar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        guru_id: GURU_ID,
+        jam_pulang: waktuKeluar,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert("Gagal absen keluar: " + data.error);
+      return;
+    }
+
+    alert("Absen keluar tersimpan!");
+  };
+
+  // ABSEN MASUK (UI)
   const handleAbsenMasuk = () => {
     const now = new Date();
     const waktuSekarang = now.toLocaleTimeString("id-ID", {
@@ -72,15 +122,14 @@ export default function AbsenGuruPage() {
     const jamSekarang = now.getHours();
     const menitSekarang = now.getMinutes();
 
-    if (jamSekarang > jamMulai || (jamSekarang === jamMulai && menitSekarang > menitMulai)) {
-      setIsTerlambat(true);
-    } else {
-      setIsTerlambat(false);
-    }
+    setIsTerlambat(jamSekarang > jamMulai || (jamSekarang === jamMulai && menitSekarang > menitMulai));
 
     setSudahMasuk(true);
+
+    submitAbsenMasuk(); // SUDAH INTEGRASI API !!!
   };
 
+  // ABSEN KELUAR
   const handleAbsenKeluar = () => {
     const now = new Date();
     const waktuSekarang = now.toLocaleTimeString("id-ID", {
@@ -88,7 +137,8 @@ export default function AbsenGuruPage() {
       minute: "2-digit",
     });
     setWaktuKeluar(waktuSekarang);
-    alert("Absen keluar dicatat (dummy).");
+
+    submitAbsenKeluar(); // SUDAH INTEGRASI API !!!
   };
 
   const bolehKeluar = (() => {
@@ -101,26 +151,22 @@ export default function AbsenGuruPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
-      {/* Header */}
+      {/* HEADER */}
       <div className="sticky top-0 z-20 bg-white flex items-center justify-between px-1 py-1 border-b border-gray-200 shadow-sm">
         <h1 className="text-[20px] font-extrabold flex-1 pl-2">Absen Guru</h1>
-
-        {/* Tombol Hard-Code */}
         <button className="text-sm font-semibold px-3 py-1 bg-gray-700 text-white rounded hover:bg-sky-700 transition flex items-center gap-2">
-          Log Saya
-          <List className="w-4 h-4" />
+          Log Saya <List className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Jam Digital */}
+      {/* JAM */}
       <div className="flex flex-col items-center justify-center py-1 bg-[#009BFF] text-white shadow-md">
         <div className="text-[48px] md:text-[56px] font-mono font-extrabold tracking-widest drop-shadow-sm">{currentTime}</div>
         <p className="text-sm opacity-90">waktu saat ini</p>
       </div>
 
-      {/* Peta */}
+      {/* PETA */}
       <div className="max-w-md mx-auto mt-4 px-2">
-        {/* Peta */}
         <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
           <div className="h-[280px] relative flex items-center justify-center">
             {isDetecting ? (
@@ -138,7 +184,7 @@ export default function AbsenGuruPage() {
           </div>
         </div>
 
-        {/* Tombol aksi atas */}
+        {/* DETEKSI */}
         <div className="flex gap-2 mt-3">
           <button
             onClick={handleDetectLocation}
@@ -150,9 +196,9 @@ export default function AbsenGuruPage() {
           </button>
         </div>
 
-        {/* --- Tombol Absen Masuk & Keluar --- */}
+        {/* MASUK & KELUAR */}
         <div className="mt-5 flex gap-2">
-          {/* Masuk */}
+          {/* MASUK */}
           <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
             <div className="flex justify-between items-center px-4 py-3">
               <div className="text-center flex-1">
@@ -175,7 +221,7 @@ export default function AbsenGuruPage() {
             </button>
           </div>
 
-          {/* Keluar */}
+          {/* KELUAR */}
           <div className="flex-1 bg-white border border-gray-300 rounded-xl shadow-sm overflow-hidden">
             <div className="flex justify-between items-center px-4 py-3">
               <div className="text-center flex-1">
